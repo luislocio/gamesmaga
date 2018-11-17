@@ -1,0 +1,63 @@
+/*!
+* Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+* Copyright 2013-2017 Start Bootstrap
+* Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+*/
+
+body {
+  padding-top: 54px;
+  font-family: 'Krub';
+}
+
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
+
+.titulo {
+    position: relative;
+    overflow: hidden;
+}
+
+img.blur {
+	height:310px;
+  box-shadow: inset 0 0 0 3000px rgba(255,255,255,0.3);
+  filter: blur(10px);
+  object-fit: cover;
+  width: 100%;
+  z-index: 0;
+}
+
+.card-img-top {
+  position: absolute;
+  height: 300px;
+  object-fit:contain;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 25px;
+}
+
+#rodape{
+  display: flex;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.card-body {
+  padding: 0.5rem;
+}
+
+pre {
+  font-family: 'Krub', sans-serif;
+  white-space: pre-wrap;
+  text-justify: inter-word !important;
+}
+
+#checkout {
+  empty-cells: hide;
+}
