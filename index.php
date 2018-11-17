@@ -38,6 +38,8 @@ if (!empty($_GET)) {
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Krub">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
   <link rel="stylesheet" href="css/shop-homepage.css">
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
   <title>GamEsmaga</title>
 </head>
 
@@ -84,46 +86,46 @@ if (!empty($_GET)) {
         </div>
 
 
-<?php
-try {
-  include_once("barra-de-paginas.php");
+        <?php
+        try {
+          include_once("barra-de-paginas.php");
 
-  if (count($jogos) > 0) {
-    $menuItems = array_slice($jogos, ($start-1), $limite);
-    // Display the results
-    foreach ($menuItems as $jogo) {
-      $plataforma=buscarPlataforma($jogo['plataforma']);
-      $genero=buscarGenero($jogo['genero']);
-      $borda=corDaBorda($plataforma['fabricante']); ?>
-      <div class="col-md-6">
-        <div class="card border-<?=$borda?> flex-md-row mb-2 shadow-sm h-md-250">
-          <div class="card-body d-flex flex-column align-items-start">
-            <strong class="d-inline-block mb-auto text-<?=$borda?>"><?=$jogo['nome']?></strong>
-            <a href="index.php?idGenero=<?=$genero['id']?>" class="text-muted small"><?=$genero['nm_genero']?></a>
-            <a href="index.php?idPlataforma=<?=$plataforma['id']?>" class="mb-1 text-muted small"><?=$plataforma['nm_plataforma']?></a>
-            <div id="rodape" class="" style="width: 100%">
-              <strong >R$<?=$jogo['preco']?></strong>
-              <a class="btn btn-outline-<?=$borda?> btn-sm ml-auto" role="button" href="jogo.php?id=<?=$jogo['id']?>">Detalhes</a>
-            </div>
-          </div>
-          <img class="card-img-right flex-auto d-none d-lg-block border-left p-1" alt="Thumbnail [200x250]" src="<?=$jogo['url']?>" style="height: 150px;">
-        </div>
+          if (count($jogos) > 0) {
+            $menuItems = array_slice($jogos, ($start-1), $limite);
+            // Display the results
+            foreach ($menuItems as $jogo) {
+              $plataforma=buscarPlataforma($jogo['plataforma']);
+              $genero=buscarGenero($jogo['genero']);
+              $borda=corDaBorda($plataforma['fabricante']); ?>
+              <div class="col-md-6">
+                <div class="card border-<?=$borda?> flex-md-row mb-2 shadow-sm h-md-250">
+                  <div class="card-body d-flex flex-column align-items-start">
+                    <strong class="d-inline-block mb-auto text-<?=$borda?>"><?=$jogo['nome']?></strong>
+                    <a href="index.php?idGenero=<?=$genero['id']?>" class="text-muted small"><?=$genero['nm_genero']?></a>
+                    <a href="index.php?idPlataforma=<?=$plataforma['id']?>" class="mb-1 text-muted small"><?=$plataforma['nm_plataforma']?></a>
+                    <div id="rodape" class="" style="width: 100%">
+                      <strong >R$<?=$jogo['preco']?></strong>
+                      <a class="btn btn-outline-<?=$borda?> btn-sm ml-auto" role="button" href="jogo.php?id=<?=$jogo['id']?>">Detalhes</a>
+                    </div>
+                  </div>
+                  <img class="card-img-right flex-auto d-none d-lg-block border-left p-1" alt="Thumbnail [200x250]" src="<?=$jogo['url']?>" style="height: 150px;">
+                </div>
+              </div>
+              <?php
+            }
+          } else {
+            echo '<h5>Não há resultados.</h5>';
+          }
+        } catch (Exception $e) {
+          console_log($e->getMessage());
+        }
+        ?>
       </div>
-      <?php
-    }
-  } else {
-    echo '<h5>Não há resultados.</h5>';
-  }
-} catch (Exception $e) {
-  console_log($e->getMessage());
-}
-?>
-</div>
-<!-- /.row -->
-</div>
-<!-- /.col-lg-9 -->
-</div>
-<!-- /.row -->
+      <!-- /.row -->
+    </div>
+    <!-- /.col-lg-9 -->
+  </div>
+  <!-- /.row -->
 </div>
 <!-- /.container -->
 <?php include_once("footer.php"); ?>

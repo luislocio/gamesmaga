@@ -45,6 +45,8 @@ $distribuidoras = listarDistribuidoras();
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Krub">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
   <link rel="stylesheet" href="css/shop-homepage.css">
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
   <title>Cadastro - Distribuidora de jogos</title>
 
 </head>
