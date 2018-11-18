@@ -10,7 +10,7 @@ if (empty($_SESSION['login'])) {
 if (empty($pedidos)) {
   $titulo="<h3 class='text-center my-3'>Todos os pedidos</h3>";
   $ativo="todas";
-  $pedidos=listarPedidosPorCliente($_SESSION['login']['id']);
+  $pedidos=listarPedidos();
 }
 
 
