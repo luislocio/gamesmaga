@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once "funcoes.php";
 
 if (!empty($_SESSION['login'])) {
     header("Location:index.php");

@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 # ---------- DATABASE ----------
 define("DSN", "mysql");

@@ -1,8 +1,8 @@
 <?php
-session_start();
+require_once "funcoes.php";
 setlocale(LC_MONETARY, 'pt_BR');
 
-require_once "funcoes.php";
+
 
 if (empty($_SESSION['carrinho'])) {
   $_SESSION['carrinho'] = [];

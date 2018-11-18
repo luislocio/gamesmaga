@@ -1,8 +1,6 @@
 <?php
-session_start();
-setlocale(LC_MONETARY, 'pt_BR');
-
 require_once "funcoes.php";
+setlocale(LC_MONETARY, 'pt_BR');
 
 if (empty($_SESSION['login']) || empty($_SESSION['carrinho'])) {
   necessarioLogin();

@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once "funcoes.php";
 
 if (empty($_SESSION['login']) || $_SESSION['login']['acesso']=="cliente") {

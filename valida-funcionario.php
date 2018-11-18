@@ -1,26 +1,9 @@
 <?php
-session_start();
+require_once "funcoes.php";
 
 if (empty($_SESSION['login'])) {
   $_SESSION['login'] = [];
 }
-
-define("DSN", "mysql");
-define("SERVIDOR", "localhost");
-define("USUARIO", "luislocio");
-define("SENHA", "73917391");
-define("BANCODEDADOS", "gamesmaga");
-
-function conectar()
-{
-  try {
-    $conn = new PDO(DSN.':host='.SERVIDOR.';dbname='.BANCODEDADOS, USUARIO, SENHA);
-    return $conn;
-  } catch (PDOException $e) {
-    echo ''.$e->getMessage();
-  }
-}
-
 $conn = conectar();
 
 $login = $_POST['login'];
@@ -38,10 +21,10 @@ if ($retorno) {
     $_SESSION['login']['acesso']=$retorno['acesso'];
     header('Location: boas-vindas.php');
   }else {
-    loginInvalido()
+    loginInvalido();
     header('Location: login-funcionario.php');
   }
 } else {
-  loginInvalido()
+  loginInvalido();
   header('Location: login-funcionario.php');
 }

@@ -1,6 +1,5 @@
 <?php
-session_start();
-require_once("funcoes.php");
+require_once "funcoes.php";
 
 if (!empty($_SESSION['login']) && $_SESSION['login']['acesso']!="cliente") {
     header("Location:cadastro-home.php");

@@ -1,10 +1,7 @@
 <?php
-require_once("funcoes.php");
-
 if (empty($_SESSION['login'])) {
     $_SESSION['login'] = [];
 }
-
 
 ?>
 
