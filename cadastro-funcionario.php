@@ -3,7 +3,8 @@ session_start();
 require_once "funcoes.php";
 
 if (empty($_SESSION['login']) || $_SESSION['login']['acesso']!="admin") {
-    header("Location:login-funcionario.php");
+  acessoRestrito();
+  header("Location:login-funcionario.php");
 }
 
 $id="";
@@ -12,28 +13,28 @@ $senha="";
 $acesso="";
 
 if (!empty($_GET)) {
-    $id = $_GET['id'];
-    if ($_GET['acao'] == 'editar') {
-        $editarFuncionario = buscarFuncionario($id);
-        $id=$editarFuncionario['id'];
-        $login=$editarFuncionario['login'];
-        $senha=$editarFuncionario['senha'];
-        $acesso=$editarFuncionario['acesso'];
-    }
-    if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] == 'admin') {
-        excluirFuncionario($id);
-        header("location: cadastro-funcionario.php");
-    }
+  $id = $_GET['id'];
+  if ($_GET['acao'] == 'editar') {
+    $editarFuncionario = buscarFuncionario($id);
+    $id=$editarFuncionario['id'];
+    $login=$editarFuncionario['login'];
+    $senha=$editarFuncionario['senha'];
+    $acesso=$editarFuncionario['acesso'];
+  }
+  if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] == 'admin') {
+    excluirFuncionario($id);
+    header("location: cadastro-funcionario.php");
+  }
 }
 
 if (!empty($_POST)) {
-    $_POST['senha']=md5($_POST['senha']);
-    if (empty($_POST['id'])) {
-        salvarFuncionario($_POST);
-    } else {
-        editarFuncionario($_POST);
-    }
-    header("location: cadastro-funcionario.php");
+  $_POST['senha']=md5($_POST['senha']);
+  if (empty($_POST['id'])) {
+    salvarFuncionario($_POST);
+  } else {
+    editarFuncionario($_POST);
+  }
+  header("location: cadastro-funcionario.php");
 }
 
 $funcionarios = listarFuncionarios();
@@ -76,24 +77,24 @@ $funcionarios = listarFuncionarios();
       <input type="hidden" name="id" value="<?=$id?>">
       <div class="container">
 
-      <div class="form-group">
-        <label for="login">Login</label>
-        <input type="text" class="form-control" name="login" id="login" placeholder="Nome de usuário" value="<?=$login?>" required>
-      </div>
-      <div class="form-group">
-        <label for="login">Senha</label>
-        <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha do usuário" value="<?=$login?>" required>
-      </div>
-      <!-- MENU DROPDOWN -->
-      <div class="form-group">
-        <label for="acesso">Acesso</label>
-        <select class="custom-select" name="acesso" id="acesso">
-          <option value="">Escolha...</option>
-          <option value="admin">Admin</option>
-          <option value="gerencia">Gerencia</option>
-          <option value="logistica">Logistica</option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label for="login">Login</label>
+          <input type="text" class="form-control" name="login" id="login" placeholder="Nome de usuário" value="<?=$login?>" required>
+        </div>
+        <div class="form-group">
+          <label for="login">Senha</label>
+          <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha do usuário" value="<?=$login?>" required>
+        </div>
+        <!-- MENU DROPDOWN -->
+        <div class="form-group">
+          <label for="acesso">Acesso</label>
+          <select class="custom-select" name="acesso" id="acesso">
+            <option value="">Escolha...</option>
+            <option value="admin">Admin</option>
+            <option value="gerencia">Gerencia</option>
+            <option value="logistica">Logistica</option>
+          </select>
+        </div>
       </div>
       <div class="row justify-content-end mt-4">
         <input type="submit" class="btn btn-success" value="Salvar"/>
@@ -108,15 +109,15 @@ $funcionarios = listarFuncionarios();
         <th>ACESSO</th>
         <th>&nbsp;</th>
         <?php if ($_SESSION['login']['acesso'] != "logistica") {
-      ?>
-      <th>&nbsp;</th>
-    <?php
-  } ?>
+          ?>
+          <th>&nbsp;</th>
+          <?php
+        } ?>
       </tr>
 
       <?php
       foreach ($funcionarios as $funcionario) {
-          ?>
+        ?>
 
         <tr>
           <td><?=$funcionario['id']?></td>

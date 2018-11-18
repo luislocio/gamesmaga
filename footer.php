@@ -11,3 +11,5 @@
   </div>
   <!-- /.container -->
 </footer>
+
+<?php showAlert(); ?>

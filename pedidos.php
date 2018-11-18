@@ -4,6 +4,7 @@ setlocale(LC_MONETARY, 'pt_BR');
 require_once "funcoes.php";
 
 if (empty($_SESSION['login'])) {
+  necessarioLogin();
   header("Location:login.php");
 }
 

@@ -5,11 +5,13 @@ setlocale(LC_MONETARY, 'pt_BR');
 require_once "funcoes.php";
 
 if (empty($_SESSION['login']) || empty($_SESSION['carrinho'])) {
+  necessarioLogin();
   header("Location:login.php");
 }
 
 
 if ($_SESSION['frete']['valor'] <= 0) {
+  necessarioFrete();
   header("Location:carrinho.php");
 }
 

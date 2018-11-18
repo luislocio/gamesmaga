@@ -9,7 +9,6 @@ if (!empty($_SESSION['login']) && $_SESSION['login']['acesso']!="cliente") {
 if (!empty($_GET)) {
     if ($_GET['acao'] == 'logout') {
         unset($_SESSION['login']);
-        console_log($_GET);
         header('Location:login-funcionario.php');
     }
 }
@@ -46,5 +45,6 @@ if (!empty($_GET)) {
   <!-- Bootstrap core JavaScript -->
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <?php showAlert() ?>
 </body>
 </html>

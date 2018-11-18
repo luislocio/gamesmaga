@@ -3,7 +3,8 @@ session_start();
 require_once "funcoes.php";
 
 if (empty($_SESSION['login']) || $_SESSION['login']['acesso']!="admin") {
-    header("Location:login-funcionario.php");
+  acessoRestrito();
+  header("Location:login-funcionario.php");
 }
 
 $id="";
@@ -27,43 +28,43 @@ $estado="";
 
 
 if (!empty($_GET)) {
-    $id = $_GET['id'];
-    if ($_GET['acao'] == 'editar') {
-        $editarCliente = buscarCliente($id);
-        $id=$editarCliente['id'];
-        $email=$editarCliente['email'];
-        $login=$editarCliente['login'];
-        $senha=$editarCliente['senha'];
-        $nomeCompleto=$editarCliente['nomecompleto'];
-        $cpf=$editarCliente['cpf'];
-        $celular=$editarCliente['celular'];
-        $telefoneFixo=$editarCliente['telefonefixo'];
-        $sexo=$editarCliente['sexo'];
-        $dataNascimento=$editarCliente['datanascimento'];
-        $cep=$editarCliente['cep'];
-        $endereco=$editarCliente['endereco'];
-        $numero=$editarCliente['numero'];
-        $complemento=$editarCliente['complemento'];
-        $referencia=$editarCliente['referencia'];
-        $bairro=$editarCliente['bairro'];
-        $cidade=$editarCliente['cidade'];
-        $estado=$editarCliente['estado'];
-    }
-    if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] == 'admin') {
-        excluirCliente($id);
-        header("location: cadastro-cliente.php");
-    }
+  $id = $_GET['id'];
+  if ($_GET['acao'] == 'editar') {
+    $editarCliente = buscarCliente($id);
+    $id=$editarCliente['id'];
+    $email=$editarCliente['email'];
+    $login=$editarCliente['login'];
+    $senha=$editarCliente['senha'];
+    $nomeCompleto=$editarCliente['nomecompleto'];
+    $cpf=$editarCliente['cpf'];
+    $celular=$editarCliente['celular'];
+    $telefoneFixo=$editarCliente['telefonefixo'];
+    $sexo=$editarCliente['sexo'];
+    $dataNascimento=$editarCliente['datanascimento'];
+    $cep=$editarCliente['cep'];
+    $endereco=$editarCliente['endereco'];
+    $numero=$editarCliente['numero'];
+    $complemento=$editarCliente['complemento'];
+    $referencia=$editarCliente['referencia'];
+    $bairro=$editarCliente['bairro'];
+    $cidade=$editarCliente['cidade'];
+    $estado=$editarCliente['estado'];
+  }
+  if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] == 'admin') {
+    excluirCliente($id);
+    header("location: cadastro-cliente.php");
+  }
 }
 
 if (!empty($_POST)) {
-    $_POST['senha']=md5($_POST['senha']);
-    console_log($_POST);
-    if (empty($_POST['id'])) {
-        salvarCliente($_POST);
-    } else {
-        editarCliente($_POST);
-    }
-    header("location: cadastro-cliente.php");
+  $_POST['senha']=md5($_POST['senha']);
+  console_log($_POST);
+  if (empty($_POST['id'])) {
+    salvarCliente($_POST);
+  } else {
+    editarCliente($_POST);
+  }
+  header("location: cadastro-cliente.php");
 }
 
 $clientes = listarClientes();
@@ -236,15 +237,15 @@ $clientes = listarClientes();
       <th>ESTADO</th>
       <th>&nbsp;</th>
       <?php if ($_SESSION['login']['acesso'] != "logistica") {
-      ?>
-    <th>&nbsp;</th>
-  <?php
-  } ?>
+        ?>
+        <th>&nbsp;</th>
+        <?php
+      } ?>
     </tr>
 
     <?php
     foreach ($clientes as $cliente) {
-        ?>
+      ?>
 
       <tr>
         <td><?=$cliente['id']?></td>

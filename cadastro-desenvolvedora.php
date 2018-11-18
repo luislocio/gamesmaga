@@ -3,32 +3,33 @@ session_start();
 require_once "funcoes.php";
 
 if (($_SESSION['login']['acesso']=="cliente") || (empty($_SESSION['login']))) {
-    header("Location:login-funcionario.php");
+  acessoRestrito();
+  header("Location:login-funcionario.php");
 }
 
 $id="";
 $desenvolvedora="";
 
 if (!empty($_GET)) {
-    $id = $_GET['id'];
-    if ($_GET['acao'] == 'editar') {
-        $editarDesenvolvedora = buscarDesenvolvedora($id);
-        $id = $editarDesenvolvedora['id'];
-        $desenvolvedora = $editarDesenvolvedora['nm_desenvolvedora'];
-    }
-    if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
-        excluirDesenvolvedora($id);
-        header("location: cadastro-desenvolvedora.php");
-    }
+  $id = $_GET['id'];
+  if ($_GET['acao'] == 'editar') {
+    $editarDesenvolvedora = buscarDesenvolvedora($id);
+    $id = $editarDesenvolvedora['id'];
+    $desenvolvedora = $editarDesenvolvedora['nm_desenvolvedora'];
+  }
+  if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
+    excluirDesenvolvedora($id);
+    header("location: cadastro-desenvolvedora.php");
+  }
 }
 
 if (!empty($_POST)) {
-    if (empty($_POST['id'])) {
-        salvarDesenvolvedora($_POST);
-    } else {
-        editarDesenvolvedora($_POST);
-    }
-    header("location: cadastro-desenvolvedora.php");
+  if (empty($_POST['id'])) {
+    salvarDesenvolvedora($_POST);
+  } else {
+    editarDesenvolvedora($_POST);
+  }
+  header("location: cadastro-desenvolvedora.php");
 }
 
 $desenvolvedoras = listarDesenvolvedoras();
@@ -77,15 +78,15 @@ $desenvolvedoras = listarDesenvolvedoras();
         <th>DESENVOLVEDORA</th>
         <th>&nbsp;</th>
         <?php if ($_SESSION['login']['acesso'] != "logistica") {
-      ?>
-      <th>&nbsp;</th>
-    <?php
-  } ?>
+          ?>
+          <th>&nbsp;</th>
+          <?php
+        } ?>
       </tr>
 
       <?php
       foreach ($desenvolvedoras as $desenvolvedora) {
-          ?>
+        ?>
 
         <tr>
           <td><?=$desenvolvedora['id']?></td>
@@ -93,9 +94,9 @@ $desenvolvedoras = listarDesenvolvedoras();
           <td class="text-center"><a class="btn btn-primary" href="cadastro-desenvolvedora.php?acao=editar&id=<?=$desenvolvedora['id']?>">Editar</a></td>
           <?php
           if ($_SESSION['login']['acesso'] != "logistica") {
-              ?>
-          <td class="text-center"><a class="btn btn-danger" href="cadastro-desenvolvedora.php?acao=excluir&id=<?=$desenvolvedora['id']?>">Excluir</a></td>
-          <?php
+            ?>
+            <td class="text-center"><a class="btn btn-danger" href="cadastro-desenvolvedora.php?acao=excluir&id=<?=$desenvolvedora['id']?>">Excluir</a></td>
+            <?php
           } ?>
         </tr>
 

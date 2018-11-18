@@ -1,5 +1,6 @@
 <?php
 
+# ---------- DATABASE ----------
 define("DSN", "mysql");
 define("SERVIDOR", "localhost");
 define("USUARIO", "luislocio");
@@ -17,6 +18,8 @@ function conectar()
   }
 }
 
+
+# ---------- ALERTAS ----------
 function console_log($data)
 {
   echo '<script>';
@@ -24,12 +27,34 @@ function console_log($data)
   echo '</script>';
 }
 
+// A função showAlert foi adicionada no arquivo footer.php,
+// exceto nas paginas de login, que não possuem footers.
 function showAlert(){
   if (!empty($_SESSION['mensagem'])) {
     echo '<script>';
     echo 'alert('. json_encode($_SESSION['mensagem']) .')';
     echo '</script>';
+
+    unset($_SESSION['mensagem']);
   }
+}
+
+// As mensagens relacionadas a controle de acesso são definidas antes do redirecionamento.
+// As mensagens relacionadas ao CRUD são definidas dentro das funções salvar, editar e excluir.
+function acessoRestrito(){
+  $_SESSION["mensagem"] = "Acesso Restrito";
+}
+
+function necessarioLogin(){
+  $_SESSION["mensagem"] = "Necessário realizar login.";
+}
+
+function necessarioFrete(){
+  $_SESSION["mensagem"] = "Necessário calcular o frete.";
+}
+
+function loginInvalido(){
+  $_SESSION["mensagem"] = "Usuario ou senha inválidos.";
 }
 
 # ---------- CLIENTES ----------

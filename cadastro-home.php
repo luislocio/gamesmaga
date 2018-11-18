@@ -3,14 +3,15 @@ session_start();
 require_once "funcoes.php";
 
 if (($_SESSION['login']['acesso']=="cliente") || (empty($_SESSION['login']))) {
-    header("Location:login-funcionario.php");
+  acessoRestrito();
+  header("Location:login-funcionario.php");
 }
 
 if (!empty($_GET)) {
-    if ($_GET['acao'] == 'logout') {
-        unset($_SESSION['login']);
-        header('Location:index.php');
-    }
+  if ($_GET['acao'] == 'logout') {
+    unset($_SESSION['login']);
+    header('Location:index.php');
+  }
 }
 ?>
 
@@ -45,10 +46,10 @@ if (!empty($_GET)) {
     $obj = json_decode($json);
     ?>
     <div class=ml-auto>
-    <h3 class="mb-2"><?=$obj->safe_title?></h3>
-    <img class="img mb-2" src="<?=$obj->img?>" alt="">
-    <p class="muted" width="100%"><?=$obj->alt?></p>
-  </div>
+      <h3 class="mb-2"><?=$obj->safe_title?></h3>
+      <img class="img mb-2" src="<?=$obj->img?>" alt="">
+      <p class="muted" width="100%"><?=$obj->alt?></p>
+    </div>
   </main>
 
   <?php include_once("footer.php"); ?>

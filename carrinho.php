@@ -77,9 +77,6 @@ if (!empty($_GET)) {
     // code...
     break;
   }
-
-
-
     header("Location:carrinho.php");
   }
 
@@ -222,9 +219,7 @@ if (!empty($_GET)) {
       </div>
     </div>
   </div>
-  <?php
-  include_once("footer.php");
-  ?>
+  <?php include_once("footer.php"); ?>
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
 </body>

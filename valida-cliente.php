@@ -21,13 +21,12 @@ if ($retorno) {
         $_SESSION['login']['login'] = $retorno['login'];
         $_SESSION['login']['id'] = $retorno['id'];
         $_SESSION['login']['acesso'] = "cliente";
-        console_log($_SESSION);
         header('Location: index.php');
     } else {
-      console_log("Senha ou login invalido");
+      loginInvalido();
       header('Location: login.php');
     }
 } else {
-    console_log("Senha ou login invalido");
+    loginInvalido();
     header('Location: login.php');
 }

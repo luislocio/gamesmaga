@@ -3,33 +3,34 @@ session_start();
 require_once "funcoes.php";
 
 if (($_SESSION['login']['acesso']=="cliente") || (empty($_SESSION['login']))) {
-    header("Location:login-funcionario.php");
+  acessoRestrito();
+  header("Location:login-funcionario.php");
 }
 
 $id="";
 $genero="";
 
 if (!empty($_GET)) {
-    console_log($_SESSION);
-    $id = $_GET['id'];
-    if ($_GET['acao'] == 'editar') {
-        $editarGenero = buscarGenero($id);
-        $id = $editarGenero['id'];
-        $genero = $editarGenero['nm_genero'];
-    }
-    if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
-        excluirGenero($id);
-        header("location: cadastro-genero.php");
-    }
+  console_log($_SESSION);
+  $id = $_GET['id'];
+  if ($_GET['acao'] == 'editar') {
+    $editarGenero = buscarGenero($id);
+    $id = $editarGenero['id'];
+    $genero = $editarGenero['nm_genero'];
+  }
+  if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
+    excluirGenero($id);
+    header("location: cadastro-genero.php");
+  }
 }
 
 if (!empty($_POST)) {
-    if (empty($_POST['id'])) {
-        salvarGenero($_POST);
-    } else {
-        editarGenero($_POST);
-    }
-    header("location: cadastro-genero.php");
+  if (empty($_POST['id'])) {
+    salvarGenero($_POST);
+  } else {
+    editarGenero($_POST);
+  }
+  header("location: cadastro-genero.php");
 }
 
 $generos = listarGeneros();
@@ -79,24 +80,24 @@ $generos = listarGeneros();
         <th>GENERO</th>
         <th>&nbsp;</th>
         <?php if ($_SESSION['login']['acesso'] != "logistica") {
-      ?>
-      <th>&nbsp;</th>
-    <?php
-  } ?>
+          ?>
+          <th>&nbsp;</th>
+          <?php
+        } ?>
       </tr>
 
       <?php
       foreach ($generos as $genero) {
-          ?>
+        ?>
         <tr>
           <td><?=$genero['id']?></td>
           <td><?=$genero['nm_genero']?></td>
           <td class="text-center"><a class="btn btn-primary" href="cadastro-genero.php?acao=editar&id=<?=$genero['id']?>">Editar</a></td>
           <?php
           if ($_SESSION['login']['acesso'] != "logistica") {
-              ?>
-          <td class="text-center"><a class="btn btn-danger" href="cadastro-genero.php?acao=excluir&id=<?=$genero['id']?>">Excluir</a></td>
-          <?php
+            ?>
+            <td class="text-center"><a class="btn btn-danger" href="cadastro-genero.php?acao=excluir&id=<?=$genero['id']?>">Excluir</a></td>
+            <?php
           } ?>
         </tr>
 

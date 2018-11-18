@@ -3,7 +3,8 @@ session_start();
 require_once "funcoes.php";
 
 if (($_SESSION['login']['acesso']=="cliente") || (empty($_SESSION['login']))) {
-    header("Location:login-funcionario.php");
+  acessoRestrito();
+  header("Location:login-funcionario.php");
 }
 
 $id="";
@@ -19,68 +20,68 @@ $descricao="";
 
 
 if (!empty($_FILES)) {
-    $caminho_arquivo = "/var/www/html/gamesmaga/img/salvas/";
-    $nome_arquivo = $_FILES['image']['name'];
-    //Armazena a extensão do arquivo
-    $extensao = substr($nome_arquivo, strripos($nome_arquivo, '.'));
+  $caminho_arquivo = "/var/www/html/gamesmaga/img/salvas/";
+  $nome_arquivo = $_FILES['image']['name'];
+  //Armazena a extensão do arquivo
+  $extensao = substr($nome_arquivo, strripos($nome_arquivo, '.'));
 
-    //Armazena e trata o nome do jogo, retirado os espaços e deixando em camel case
-    $nome = $_POST['nome'];
-    $nome = ucwords(strtolower($nome));
-    $nome = str_replace(" ", "", $nome);
+  //Armazena e trata o nome do jogo, retirado os espaços e deixando em camel case
+  $nome = $_POST['nome'];
+  $nome = ucwords(strtolower($nome));
+  $nome = str_replace(" ", "", $nome);
 
-    //Armazena e trata o nome da plataforma, retirado os espaços
-    $plataforma = buscarPlataforma($_POST['plataforma']);
-    $plataforma = str_replace(" ", "", $plataforma);
+  //Armazena e trata o nome da plataforma, retirado os espaços
+  $plataforma = buscarPlataforma($_POST['plataforma']);
+  $plataforma = str_replace(" ", "", $plataforma);
 
-    //Concatena o nome final do arquivo
-    $novo_nome = limpaString($nome.$plataforma['nm_plataforma']).$extensao;
-    move_uploaded_file($_FILES['image']['tmp_name'], $caminho_arquivo.$novo_nome);
+  //Concatena o nome final do arquivo
+  $novo_nome = limpaString($nome.$plataforma['nm_plataforma']).$extensao;
+  move_uploaded_file($_FILES['image']['tmp_name'], $caminho_arquivo.$novo_nome);
 
 
 
-    //Verifica se o arquivo possui extensão, para auxiliar no if que oculta a imagem
-    if (empty($extensao)) {
-        $url="";
-    } else {
-        $url = 'img/salvas/'.$novo_nome;
-    }
+  //Verifica se o arquivo possui extensão, para auxiliar no if que oculta a imagem
+  if (empty($extensao)) {
+    $url="";
+  } else {
+    $url = 'img/salvas/'.$novo_nome;
+  }
 
-    $nome="";
-    $plataforma="";
+  $nome="";
+  $plataforma="";
 }
 
 if (!empty($_GET)) {
-    $id = $_GET['id'];
+  $id = $_GET['id'];
 
-    if ($_GET['acao'] == 'editar') {
-        $editarJogo = buscarJogo($id);
-        $id=$editarJogo['id'];
-        $nome=$editarJogo['nome'];
-        $ano=$editarJogo['ano'];
-        $desenvolvedora=$editarJogo['desenvolvedora'];
-        $distribuidora=$editarJogo['distribuidora'];
-        $plataforma=$editarJogo['plataforma'];
-        $genero=$editarJogo['genero'];
-        $url=$editarJogo['url'];
-        $preco=$editarJogo['preco'];
-        $descricao=$editarJogo['descricao'];
-    }
+  if ($_GET['acao'] == 'editar') {
+    $editarJogo = buscarJogo($id);
+    $id=$editarJogo['id'];
+    $nome=$editarJogo['nome'];
+    $ano=$editarJogo['ano'];
+    $desenvolvedora=$editarJogo['desenvolvedora'];
+    $distribuidora=$editarJogo['distribuidora'];
+    $plataforma=$editarJogo['plataforma'];
+    $genero=$editarJogo['genero'];
+    $url=$editarJogo['url'];
+    $preco=$editarJogo['preco'];
+    $descricao=$editarJogo['descricao'];
+  }
 
-    if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
-        excluirJogo($id);
-        header("location: cadastro-jogo.php");
-    }
+  if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
+    excluirJogo($id);
+    header("location: cadastro-jogo.php");
+  }
 }
 
 if (!empty($_POST)) {
-    $_POST['url'] = $url;
-    if (empty($_POST['id'])) {
-        salvarJogo($_POST);
-    } else {
-        editarJogo($_POST);
-    }
-    header("location: cadastro-jogo.php");
+  $_POST['url'] = $url;
+  if (empty($_POST['id'])) {
+    salvarJogo($_POST);
+  } else {
+    editarJogo($_POST);
+  }
+  header("location: cadastro-jogo.php");
 }
 
 $desenvolvedoras = listarDesenvolvedoras();
@@ -137,12 +138,12 @@ $jogos = listarJogos();
       <input type="hidden" name="id" value="<?=$id?>">
       <input type="hidden" name="url" value="<?=$url?>">
       <?php if (!empty($url) && $url !='img/salvas/') {
-      ?>
+        ?>
         <div class="row justify-content-around mt-5">
           <img src="<?=$url?>" class="img" id="capaDoJogo" height="200"/>
         </div>
         <?php
-  } ?>
+      } ?>
       <div class="row justify-content-around ">
         <div class="form-group">
           <label for="image">Capa do jogo</label>
@@ -175,7 +176,7 @@ $jogos = listarJogos();
         <option value="">Escolha...</option>
         <?php
         foreach ($desenvolvedoras as $id => $desenvolvedora) {
-            ?>
+          ?>
           <option value="<?= $desenvolvedora['id'] ?>"><?= $desenvolvedora['nm_desenvolvedora'] ?></option>
           <?php
         }
@@ -188,7 +189,7 @@ $jogos = listarJogos();
         <option value="">Escolha...</option>
         <?php
         foreach ($distribuidoras as $id => $distribuidora) {
-            ?>
+          ?>
           <option value="<?= $distribuidora['id'] ?>"><?= $distribuidora['nm_distribuidora'] ?></option>
           <?php
         }
@@ -206,7 +207,7 @@ $jogos = listarJogos();
       <option value="">Escolha...</option>
       <?php
       foreach ($plataformas as $id => $plataforma) {
-          ?>
+        ?>
         <option value="<?= $plataforma['id'] ?>"><?= $plataforma['nm_plataforma'] ?></option>
         <?php
       }
@@ -219,7 +220,7 @@ $jogos = listarJogos();
       <option value="">Escolha...</option>
       <?php
       foreach ($generos as $id => $genero) {
-          ?>
+        ?>
         <option value="<?= $genero['id'] ?>"><?= $genero['nm_genero'] ?></option>
         <?php
       }
@@ -252,18 +253,18 @@ $jogos = listarJogos();
     <th>PRECO</th>
     <th>&nbsp;</th>
     <?php if ($_SESSION['login']['acesso'] != "logistica") {
-          ?>
-  <th>&nbsp;</th>
-<?php
-      } ?>
+      ?>
+      <th>&nbsp;</th>
+      <?php
+    } ?>
   </tr>
 
   <?php
   foreach ($jogos as $jogo) {
-      $desenvolvedora=buscarDesenvolvedora($jogo['desenvolvedora']);
-      $distribuidora=buscarDistribuidora($jogo['distribuidora']);
-      $plataforma=buscarPlataforma($jogo['plataforma']);
-      $genero=buscarGenero($jogo['genero']); ?>
+    $desenvolvedora=buscarDesenvolvedora($jogo['desenvolvedora']);
+    $distribuidora=buscarDistribuidora($jogo['distribuidora']);
+    $plataforma=buscarPlataforma($jogo['plataforma']);
+    $genero=buscarGenero($jogo['genero']); ?>
 
     <tr>
       <td><?=$jogo['id']?></td>

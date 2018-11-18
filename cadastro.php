@@ -1,5 +1,8 @@
 <?php
 require_once "funcoes.php";
+if (!empty($_SESSION['login'])) {
+    header("Location:index.php");
+}
 
 $id="";
 $email="";
@@ -19,7 +22,6 @@ $referencia="";
 $bairro="";
 $cidade="";
 $estado="";
-
 
 if (!empty($_GET)) {
     $id = $_GET['id'];
@@ -44,19 +46,12 @@ if (!empty($_GET)) {
         $cidade=$editarCliente['cidade'];
         $estado=$editarCliente['estado'];
     }
-    if ($_GET['acao'] == 'excluir') {
-        excluirCliente($id);
-        header("location: cadastro.php");
-    }
 }
 
 if (!empty($_POST)) {
     $_POST['senha']=md5($_POST['senha']);
-    console_log($_POST);
     if (empty($_POST['id'])) {
         salvarCliente($_POST);
-    } else {
-        editarCliente($_POST);
     }
     header("location: cadastro.php");
 }

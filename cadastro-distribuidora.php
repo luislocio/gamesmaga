@@ -3,32 +3,33 @@ session_start();
 require_once "funcoes.php";
 
 if (($_SESSION['login']['acesso']=="cliente") || (empty($_SESSION['login']))) {
-    header("Location:login-funcionario.php");
+  acessoRestrito();
+  header("Location:login-funcionario.php");
 }
 
 $id="";
 $distribuidora="";
 
 if (!empty($_GET)) {
-    $id = $_GET['id'];
-    if ($_GET['acao'] == 'editar') {
-        $editarDistribuidora = buscarDistribuidora($id);
-        $id = $editarDistribuidora['id'];
-        $distribuidora = $editarDistribuidora['nm_distribuidora'];
-    }
-    if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
-        excluirDistribuidora($id);
-        header("location: cadastro-distribuidora.php");
-    }
+  $id = $_GET['id'];
+  if ($_GET['acao'] == 'editar') {
+    $editarDistribuidora = buscarDistribuidora($id);
+    $id = $editarDistribuidora['id'];
+    $distribuidora = $editarDistribuidora['nm_distribuidora'];
+  }
+  if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
+    excluirDistribuidora($id);
+    header("location: cadastro-distribuidora.php");
+  }
 }
 
 if (!empty($_POST)) {
-    if (empty($_POST['id'])) {
-        salvarDistribuidora($_POST);
-    } else {
-        editarDistribuidora($_POST);
-    }
-    header("location: cadastro-distribuidora.php");
+  if (empty($_POST['id'])) {
+    salvarDistribuidora($_POST);
+  } else {
+    editarDistribuidora($_POST);
+  }
+  header("location: cadastro-distribuidora.php");
 }
 
 $distribuidoras = listarDistribuidoras();
@@ -76,15 +77,15 @@ $distribuidoras = listarDistribuidoras();
         <th>DISTRIBUIDORA</th>
         <th>&nbsp;</th>
         <?php if ($_SESSION['login']['acesso'] != "logistica") {
-      ?>
-      <th>&nbsp;</th>
-    <?php
-  } ?>
+          ?>
+          <th>&nbsp;</th>
+          <?php
+        } ?>
       </tr>
 
       <?php
       foreach ($distribuidoras as $distribuidora) {
-          ?>
+        ?>
 
         <tr>
           <td><?=$distribuidora['id']?></td>
@@ -92,9 +93,9 @@ $distribuidoras = listarDistribuidoras();
           <td class="text-center"><a class="btn btn-primary" href="cadastro-distribuidora.php?acao=editar&id=<?=$distribuidora['id']?>">Editar</a></td>
           <?php
           if ($_SESSION['login']['acesso'] != "logistica") {
-              ?>
-          <td class="text-center"><a class="btn btn-danger" href="cadastro-distribuidora.php?acao=excluir&id=<?=$distribuidora['id']?>">Excluir</a></td>
-          <?php
+            ?>
+            <td class="text-center"><a class="btn btn-danger" href="cadastro-distribuidora.php?acao=excluir&id=<?=$distribuidora['id']?>">Excluir</a></td>
+            <?php
           } ?>
         </tr>
 

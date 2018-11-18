@@ -3,7 +3,8 @@ session_start();
 require_once "funcoes.php";
 
 if (($_SESSION['login']['acesso']=="cliente") || (empty($_SESSION['login']))) {
-    header("Location:login-funcionario.php");
+  acessoRestrito();
+  header("Location:login-funcionario.php");
 }
 
 $id="";
@@ -11,26 +12,26 @@ $plataforma="";
 $fabricante="";
 
 if (!empty($_GET)) {
-    $id = $_GET['id'];
-    if ($_GET['acao'] == 'editar') {
-        $editarPlataforma = buscarPlataforma($id);
-        $id = $editarPlataforma['id'];
-        $plataforma = $editarPlataforma['nm_plataforma'];
-        $fabricante = $editarPlataforma['fabricante'];
-    }
-    if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
-        excluirPlataforma($id);
-        header("location: cadastro-plataforma.php");
-    }
+  $id = $_GET['id'];
+  if ($_GET['acao'] == 'editar') {
+    $editarPlataforma = buscarPlataforma($id);
+    $id = $editarPlataforma['id'];
+    $plataforma = $editarPlataforma['nm_plataforma'];
+    $fabricante = $editarPlataforma['fabricante'];
+  }
+  if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
+    excluirPlataforma($id);
+    header("location: cadastro-plataforma.php");
+  }
 }
 
 if (!empty($_POST)) {
-    if (empty($_POST['id'])) {
-        salvarPlataforma($_POST);
-    } else {
-        editarPlataforma($_POST);
-    }
-    header("location: cadastro-plataforma.php");
+  if (empty($_POST['id'])) {
+    salvarPlataforma($_POST);
+  } else {
+    editarPlataforma($_POST);
+  }
+  header("location: cadastro-plataforma.php");
 }
 
 $plataformas = listarPlataformas();
@@ -82,16 +83,16 @@ $plataformas = listarPlataformas();
         <th>FABRICANTE</th>
         <th>&nbsp;</th>
         <?php if ($_SESSION['login']['acesso'] != "logistica") {
-      ?>
-      <th>&nbsp;</th>
-    <?php
-  } ?>
+          ?>
+          <th>&nbsp;</th>
+          <?php
+        } ?>
 
       </tr>
 
       <?php
       foreach ($plataformas as $plataforma) {
-          ?>
+        ?>
 
         <tr>
           <td><?=$plataforma['id']?></td>
@@ -100,23 +101,23 @@ $plataformas = listarPlataformas();
           <td class="text-center"><a class="btn btn-primary" href="cadastro-plataforma.php?acao=editar&id=<?=$plataforma['id']?>">Editar</a></td>
           <?php
           if ($_SESSION['login']['acesso'] != "logistica") {
-              ?>
-          <td class="text-center"><a class="btn btn-danger" href="cadastro-plataforma.php?acao=excluir&id=<?=$plataforma['id']?>">Excluir</a></td>
-          <?php
+            ?>
+            <td class="text-center"><a class="btn btn-danger" href="cadastro-plataforma.php?acao=excluir&id=<?=$plataforma['id']?>">Excluir</a></td>
+            <?php
           } ?>
 
-      </tr>
+        </tr>
 
-      <?php
+        <?php
       }
-    ?>
-  </table>
-</main>
+      ?>
+    </table>
+  </main>
 
-<?php include_once("footer.php"); ?>
-<!-- Bootstrap core JavaScript -->
-<script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+  <?php include_once("footer.php"); ?>
+  <!-- Bootstrap core JavaScript -->
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
 </body>
 
 </html>
