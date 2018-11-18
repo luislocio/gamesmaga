@@ -98,19 +98,12 @@ $jogos = listarJogos();
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/sticky-footer-navbar.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Krub">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
-  <link rel="stylesheet" href="css/shop-homepage.css">
-  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-  <title>GamEsmaga - Cadastro de Jogos</title>
+  <!-- Informações padrões do head -->
+  <?php include_once("head.php");?>
 
+  <title>GamEsmaga - Cadastro de Jogos</title>
+  <link rel="stylesheet" href="css/shop-homepage.css">
 
   <script type="text/javascript">
   function carregarDados(desenvolvedora, distribuidora, plataforma, genero)  {
@@ -127,13 +120,10 @@ $jogos = listarJogos();
     element.value = genero;
   }
   </script>
-
 </head>
 
 <body onload="carregarDados('<?=$desenvolvedora?>', '<?=$distribuidora?>', '<?=$plataforma?>', '<?=$genero?>');">
-  <?php
-  include_once("header-funcionario.php");
-  ?>
+  <?php include_once("header-funcionario.php"); ?>
 
   <!-- Begin page content -->
   <main role="main" class="container">
@@ -141,13 +131,11 @@ $jogos = listarJogos();
     <form action="cadastro-jogo.php" method="POST" enctype="multipart/form-data">
       <input type="hidden" name="id" value="<?=$id?>">
       <input type="hidden" name="url" value="<?=$url?>">
-      <?php if (!empty($url) && $url !='img/salvas/') {
-        ?>
+      <?php if (!empty($url) && $url !='img/salvas/') { ?>
         <div class="row justify-content-around mt-5">
           <img src="<?=$url?>" class="img" id="capaDoJogo" height="200"/>
         </div>
-        <?php
-      } ?>
+      <?php } ?>
       <div class="row justify-content-around ">
         <div class="form-group">
           <label for="image">Capa do jogo</label>
@@ -158,8 +146,6 @@ $jogos = listarJogos();
           <input type="text" class="form-control" name="preco" id="preco" placeholder="Informe o preço do jogo" value="<?=$preco?>" required>
         </div>
       </div>
-
-
     </div>
   </div>
   <div class="row">
@@ -178,30 +164,21 @@ $jogos = listarJogos();
       <label for="desenvolvedora">Desenvolvedora</label>
       <select class="custom-select" id="desenvolvedora" name="desenvolvedora" required>
         <option value="">Escolha...</option>
-        <?php
-        foreach ($desenvolvedoras as $id => $desenvolvedora) {
-          ?>
+        <?php foreach ($desenvolvedoras as $id => $desenvolvedora) { ?>
           <option value="<?= $desenvolvedora['id'] ?>"><?= $desenvolvedora['nm_desenvolvedora'] ?></option>
-          <?php
-        }
-        ?>
+        <?php } ?>
       </select>
     </div>
     <div class="form-group mb-3 col">
       <label for="distribuidora">Distribuidora</label>
       <select class="custom-select" id="distribuidora" name="distribuidora" required>
         <option value="">Escolha...</option>
-        <?php
-        foreach ($distribuidoras as $id => $distribuidora) {
-          ?>
+        <?php foreach ($distribuidoras as $id => $distribuidora) { ?>
           <option value="<?= $distribuidora['id'] ?>"><?= $distribuidora['nm_distribuidora'] ?></option>
-          <?php
-        }
-        ?>
+        <?php } ?>
       </select>
     </div>
   </div>
-
 </div>
 
 <div class="row justify-content-around">
@@ -209,41 +186,30 @@ $jogos = listarJogos();
     <label for="plataforma">Plataforma</label>
     <select class="custom-select" id="plataforma" name="plataforma" required>
       <option value="">Escolha...</option>
-      <?php
-      foreach ($plataformas as $id => $plataforma) {
-        ?>
+      <?php foreach ($plataformas as $id => $plataforma) { ?>
         <option value="<?= $plataforma['id'] ?>"><?= $plataforma['nm_plataforma'] ?></option>
-        <?php
-      }
-      ?>
+      <?php } ?>
     </select>
   </div>
   <div class="form-group mb-3 col">
     <label for="Genero">Genero</label>
     <select class="custom-select" id="genero" name="genero" value="<?=$genero?>" required>
       <option value="">Escolha...</option>
-      <?php
-      foreach ($generos as $id => $genero) {
-        ?>
+      <?php foreach ($generos as $id => $genero) { ?>
         <option value="<?= $genero['id'] ?>"><?= $genero['nm_genero'] ?></option>
-        <?php
-      }
-      ?>
+      <?php } ?>
     </select>
   </div>
-
 </div>
 <div class="form-group">
   <label for="exampleFormControlTextarea1">Descrição</label>
   <textarea class="form-control" id="descricao" name="descricao" rows="3" required><?=$descricao?></textarea>
 </div>
 </div>
-
 <div class="row justify-content-end mt-4">
   <input type="submit" class="btn btn-success" value="Salvar"/>
 </div>
 </form>
-
 <table class="table mt-3 table-sm table-bordered table-hover">
   <tr>
     <th>ID</th>
@@ -256,15 +222,12 @@ $jogos = listarJogos();
     <th>GENERO</th>
     <th>PRECO</th>
     <th>&nbsp;</th>
-    <?php if ($_SESSION['login']['acesso'] != "logistica") {
-      ?>
+    <?php if ($_SESSION['login']['acesso'] != "logistica") { ?>
       <th>&nbsp;</th>
-      <?php
-    } ?>
+    <?php } ?>
   </tr>
 
-  <?php
-  foreach ($jogos as $jogo) {
+  <?php foreach ($jogos as $jogo) {
     $desenvolvedora=buscarDesenvolvedora($jogo['desenvolvedora']);
     $distribuidora=buscarDistribuidora($jogo['distribuidora']);
     $plataforma=buscarPlataforma($jogo['plataforma']);
@@ -284,14 +247,9 @@ $jogos = listarJogos();
       <td class="text-center"><a class="btn btn-danger" href="cadastro-jogo.php?acao=excluir&id=<?=$jogo['id']?>">Excluir</a></td>
     </tr>
 
-    <?php
-  }
-  ?>
+  <?php } ?>
 </table>
-
 </main>
-
-
 
 <?php include_once("footer.php"); ?>
 <!-- Bootstrap core JavaScript -->

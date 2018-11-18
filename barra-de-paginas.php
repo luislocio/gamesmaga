@@ -24,18 +24,15 @@ if (empty($_GET['busca']) && empty($_GET['idPlataforma']) && empty($_GET['idGene
     }
   }
 }
-
-
 ?>
+
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
     <li class="page-item <?=$botaoAnterior?>"><a class="page-link" href="<?=$get?>page=<?=$pagina-1?>">Anterior</a></li>
-    <?php
-    for ($i = 1; $i <= $paginas ; $i++) {
+    <?php for ($i = 1; $i <= $paginas ; $i++) {
       $ativo = ($i==$pagina) ? "active" : ""; ?>
       <li class="page-item <?=$ativo?>"><a class="page-link" href="<?=$get?>page=<?=$i?>"><?=$i?></a></li>
-      <?php
-    } ?>
+    <?php } ?>
     <li class="page-item <?=$botaoProximo?>"><a class="page-link" href="<?=$get?>page=<?=$pagina+1?>">Proximo</a></li>
   </ul>
 </nav>

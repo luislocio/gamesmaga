@@ -71,11 +71,12 @@ if (!empty($_GET)) {
     $peso = $quantidadeDeProdutos*0.3;
     $_SESSION['frete']['cep'] = $_GET['cep'];
     $resultado = calculaFrete(
-      '41106',
-      '80820320',
-      $_SESSION['frete']['cep'],
-      $peso,
-      '8', '15', '20', 0 );
+      '41106',          // CÓDIGO DA OPERAÇÃO
+      '80820320',       // CEP ORIGEM
+      $cep,             // CEP DESTINO
+      $peso,            // PESO DO PACOTE
+      '8', '15', '20',  // DIMENSÕES DO PACOTE
+      0);               // VALOR DECLARADO?
       $valor = floatval(str_replace(',', '.', str_replace('.', '', $resultado['valor'])));
       $freteTotal= floatval($valor * $quantidadeDeEmbalagens);
       $_SESSION['frete']['valor']=$freteTotal;
@@ -88,46 +89,36 @@ if (!empty($_GET)) {
     exit;
   }
   ?>
+
   <!DOCTYPE html>
   <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/sticky-footer-navbar.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Krub">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
+    <!-- Informações padrões do head -->
+    <?php include_once("head.php");?>
+
+    <title>GamEsmaga - Carrinho</title>
     <link rel="stylesheet" href="css/shop-homepage.css">
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-    <title>GamEsmaga</title>
   </head>
   <body>
-    <?php
-    include_once("header-cliente.php")
-    ?>
+    <?php include_once("header-cliente.php") ?>
 
     <!-- Page Content -->
     <div class="container">
       <div class="row">
-        <?php
-        include_once("menu-lateral.php")
-        ?>
+        <?php include_once("menu-lateral.php") ?>
         <!-- /.col-lg-3 -->
         <div class="col-lg-9">
           <h4>Meu Carrinho</h4>
           <hr class="pb-1" style="color:grey;background-color:grey;" >
-
-          <?php
-          $carrinho = $_SESSION['carrinho'];
+          <?php $carrinho = $_SESSION['carrinho'];
           if (empty($carrinho)) {
             echo "<div align='center'>
             <i class='fas fa-shopping-cart'></i>
             <p>Não há produtos no carrinho.</p>
             </div>";
-          } else {
-            ?>
+          } else { ?>
             <table class="table mt-3 table-hover table-borderless table-sm">
+
               <?php
               $totalDaCompra=0;
               $quantidadeDeProdutos=0;
@@ -143,10 +134,10 @@ if (!empty($_GET)) {
 
                 $botaoAnterior = ($produto['quantidade'] > 1) ? "" : "disabled";
                 ?>
+
                 <tr class="border-bottom">
                   <td ><img src="<?=$produto['url']?>" height="100px" alt="Capa do jogo" class="img"></td>
                   <td class="align-middle"><?=$produto['nome']?><br> <span class="small"><?=$plataforma['nm_plataforma']?></span></td>
-
                   <td class="align-middle">
                     <nav aria-label="Quantidade de Produtos">
                       <ul class="pagination justify-content-center">
@@ -156,7 +147,6 @@ if (!empty($_GET)) {
                       </ul>
                     </nav>
                   </td>
-
                   <td class="align-middle" width="110px" align="center"><?=$totalDoProduto?>
                     <?php if ($produto['quantidade'] > 1){ ?>
                       <br><span class="small" align="center"><?=money_format('%n',floatval($preco))?> cada</span>
@@ -164,9 +154,7 @@ if (!empty($_GET)) {
                   </td>
                   <td class="align-middle"><a  href="?acao=remover&id=<?=$produto['id']?>"><i class="fas fa-trash-alt text-danger"></i></a></span></td>
                 </tr>
-                <?php
-              }
-              ?>
+                <?php } ?>
             </table>
 
             <div class="row justify-content-between mt-4">
@@ -180,8 +168,6 @@ if (!empty($_GET)) {
                     <input type="submit" class="btn btn-primary mt-2" value="Calcular"/>
                   </div>
                 </form>
-
-
               </div>
 
               <div class="col-lg-6">
@@ -213,17 +199,12 @@ if (!empty($_GET)) {
                 </div>
               </div>
             </div>
-
-
           </div>
-          <?php
-        }
-
-        ?>
-
+          <?php } ?>
       </div>
     </div>
   </div>
+
   <?php include_once("footer.php"); ?>
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>

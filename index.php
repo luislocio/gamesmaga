@@ -30,33 +30,22 @@ if (!empty($_GET)) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/sticky-footer-navbar.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Krub">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
-  <link rel="stylesheet" href="css/shop-homepage.css">
-  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+  <!-- Informações padrões do head -->
+  <?php include_once("head.php");?>
+
   <title>GamEsmaga</title>
+  <link rel="stylesheet" href="css/shop-homepage.css">
 </head>
 
 <body>
-
   <!-- Navigation -->
-  <?php
-  include_once("header-cliente.php")
-  ?>
+  <?php include_once("header-cliente.php") ?>
 
   <!-- Page Content -->
   <div class="container">
     <div class="row">
-      <?php
-      include_once("menu-lateral.php")
-      ?>
+      <?php include_once("menu-lateral.php") ?>
       <!-- /.col-lg-3-->
       <div class="col-lg-9">
         <div id="carouselExampleIndicators" class="carousel slide mb-4" data-ride="carousel">
@@ -89,8 +78,8 @@ if (!empty($_GET)) {
 
         <?php
         try {
-          include_once("barra-de-paginas.php");
 
+          include_once("barra-de-paginas.php");
           if (count($jogos) > 0) {
             $menuItems = array_slice($jogos, ($start-1), $limite);
             // Display the results
@@ -129,6 +118,7 @@ if (!empty($_GET)) {
   <!-- /.row -->
 </div>
 <!-- /.container -->
+
 <?php include_once("footer.php"); ?>
 <!-- Bootstrap core JavaScript -->
 <script src="js/jquery-3.3.1.min.js"></script>

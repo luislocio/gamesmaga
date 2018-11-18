@@ -15,16 +15,14 @@ $funcionario=buscarFuncionario($_SESSION['login']['id']);
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
-        <?php if ($funcionario['acesso']=="admin") {
-    ?>
+        <?php if ($funcionario['acesso']=="admin") { ?>
           <li class="nav-item active border-right">
             <a class="nav-link" href="cadastro-cliente.php">Cliente</a>
           </li>
           <li class="nav-item active border-right">
             <a class="nav-link" href="cadastro-funcionario.php">Funcionario</a>
           </li>
-        <?php
-} ?>
+        <?php } ?>
         <li class="nav-item active border-right">
           <a class="nav-link" href="cadastro-desenvolvedora.php">Desenvolvedora</a>
         </li>

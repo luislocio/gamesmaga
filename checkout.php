@@ -21,32 +21,22 @@ $carrinho = $_SESSION['carrinho'];
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/sticky-footer-navbar.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Krub">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.2/css/all.css">
+  <!-- Informações padrões do head -->
+  <?php include_once("head.php");?>
+
+  <title>GamEsmaga - Checkout</title>
   <link rel="stylesheet" href="css/shop-homepage.css">
-  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-  <title>GamEsmaga</title>
 </head>
 <body>
-  <?php
-  include_once("header-cliente.php")
-  ?>
+  <?php include_once("header-cliente.php") ?>
 
   <!-- Page Content -->
   <div class="container">
     <div class="row">
-      <?php
-      include_once("menu-lateral.php")
-      ?>
-      <!-- /.col-lg-3 -->
+      <?php include_once("menu-lateral.php") ?>
+
       <div class="col-lg-9">
-        <?php
-        if (!empty($_SESSION['login']) && !empty($_SESSION['carrinho'])) {
+        <?php if (!empty($_SESSION['login']) && !empty($_SESSION['carrinho'])) {
           try {
             criarPedido($_SESSION['login']['id'], $_SESSION['carrinho'], $_SESSION['frete']['valor']);
             echo "<h3 class='text-center'>Compra realizada com sucesso!</h3>";
@@ -60,7 +50,6 @@ $carrinho = $_SESSION['carrinho'];
             <th>Valor total</th>
             </thead>
             </tr>";
-
 
             $totalDaCompra=0;
             $quantidadeDeProdutos=0;
@@ -78,9 +67,7 @@ $carrinho = $_SESSION['carrinho'];
                 <td class="align-middle"><?=money_format('%n',floatval($preco))?></td>
                 <td class="align-middle" width="110px" align="center"><?=$totalDoProduto?> </td>
               </tr>
-              <?php
-            }
-            ?>
+            <?php } ?>
             <tr>
               <td></td>
               <td></td>
@@ -114,6 +101,7 @@ $carrinho = $_SESSION['carrinho'];
       }
     } ?>
   </div>
+
   <?php include_once("footer.php"); ?>
   <!-- Bootstrap core JavaScript -->
   <script src="js/jquery-3.3.1.min.js"></script>

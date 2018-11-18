@@ -1,7 +1,7 @@
 <?php
 // Declaração de variavéis da sessão
 if (empty($_SESSION['login'])) {
-    $_SESSION['login'] = [];
+  $_SESSION['login'] = [];
 }
 ?>
 
@@ -28,17 +28,14 @@ if (empty($_SESSION['login'])) {
           <li class="nav-item active px-3">
             <a class="nav-link" onclick="return confirm('Voce esta certo disso?')" href="index.php?acao=logout"><i class="fas fa-sign-out-alt"></i></a>
           </li>
-          <?php
-} else {
-        ?>
+        <?php }else { ?>
           <li class="nav-item active border-right px-3">
             <a class="nav-link" href="login.php">Entrar</a>
           </li>
           <li class="nav-item active px-3">
             <a class="nav-link" href="cadastro.php">Cadastrar</a>
           </li>
-          <?php
-    } ?>
+        <?php } ?>
         <li class="nav-item active border-left px-3">
           <a class="nav-link" href="carrinho.php"><i class="fas fa-shopping-cart"></i></a>
         </li>
