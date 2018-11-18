@@ -1,5 +1,6 @@
 <?php
 session_start();
+setlocale(LC_MONETARY, 'pt_BR');
 
 # ---------- DATABASE ----------
 define("DSN", "mysql");
