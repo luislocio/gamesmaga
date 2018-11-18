@@ -1,6 +1,10 @@
+<?php
+$generos = listarGeneros();
+$plataformas = listarPlataformas();
+?>
 <div class="col-lg-3 mb-3">
   <a href="index.php"><img class="img rounded" width="100%" src="img/hulkMain.png" alt=""></a>
-  
+
   <h3 class="mt-4">Generos</h3>
   <div class="list-group">
     <?php

@@ -85,7 +85,7 @@ if (!empty($_POST)) {
   header("location: cadastro-jogo.php");
 }
 
-// Atribuição de valor às variaveis principais
+// Atribuição de valor às variaveis do menu dropdown
 $desenvolvedoras = listarDesenvolvedoras();
 $generos = listarGeneros();
 $plataformas = listarPlataformas();

@@ -15,8 +15,6 @@ if ($_SESSION['frete']['valor'] <= 0) {
 
 // Atribuição de valor às variaveis principais
 $carrinho = $_SESSION['carrinho'];
-$generos = listarGeneros();
-$plataformas = listarPlataformas();
 ?>
 
 <!DOCTYPE html>

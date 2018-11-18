@@ -46,11 +46,8 @@ if (!empty($_GET)) {
     break;
   }
 }
-
-
-$generos = listarGeneros();
-$plataformas = listarPlataformas();
 ?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>

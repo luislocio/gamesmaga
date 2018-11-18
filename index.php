@@ -25,10 +25,6 @@ if (!empty($_GET)) {
     header('Location:index.php');
   }
 }
-
-// Atribuição de valor às variaveis principais
-$generos = listarGeneros();
-$plataformas = listarPlataformas();
 ?>
 
 <!DOCTYPE html>
