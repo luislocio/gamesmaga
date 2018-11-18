@@ -1,4 +1,5 @@
 <?php
+// Declaração de variavéis da sessão
 if (empty($_SESSION['login'])) {
     $_SESSION['login'] = [];
 }
@@ -46,7 +47,7 @@ $funcionario=buscarFuncionario($_SESSION['login']['id']);
           <a class="nav-link">Olá, <?=$funcionario['login']?> </a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" onclick="return confirm('Voce esta certo disso?')" href="login-funcionario.php?acao=logout"><i class="fas fa-sign-out-alt"></i></a>
+          <a class="nav-link" onclick="return confirm('Voce esta certo disso?')" href="cadastro-home.php?acao=logout"><i class="fas fa-sign-out-alt"></i></a>
         </li>
       </ul>
     </div>

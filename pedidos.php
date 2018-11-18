@@ -1,11 +1,13 @@
 <?php
 require_once "funcoes.php";
 
+// Pré-requisito [login]
 if (empty($_SESSION['login'])) {
   necessarioLogin();
   header("Location:login.php");
 }
 
+// Cria a lista de pedidos a serem mostrados na tela
 if (empty($pedidos)) {
   $titulo="<h3 class='text-center my-3'>Todos os pedidos</h3>";
   $ativo="todas";
@@ -13,9 +15,11 @@ if (empty($pedidos)) {
 }
 
 
+// Filtra os pedidos
 if (!empty($_GET)) {
   $pedidos=listarPedidos();
   switch ($_GET['status']) {
+    // Apenas pedidos pendentes
     case 'pendente':
     $titulo="<h3 class='text-center my-3'>Pedidos Pendentes</h3>";
     $ativo="pendentes";
@@ -25,15 +29,17 @@ if (!empty($_GET)) {
       }
     }
     break;
-    case 'finalizadas':
+    // Apenas pedidos finalizados
+    case 'finalizados':
     $titulo="<h3 class='text-center my-3'>Pedidos Finalizados</h3>";
-    $ativo="finalizadas";
+    $ativo="finalizados";
     foreach ($pedidos as $indice => $pedido) {
       if (empty($pedido['dt_pagamento'])) {
         unset($pedidos[$indice]);
       }
     }
     break;
+    // Todos os pedidos
     case 'todas':
     $titulo="<h3 class='text-center my-3'>Todos os pedidos</h3>";
     $ativo="todas";
@@ -43,7 +49,6 @@ if (!empty($_GET)) {
     break;
   }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -81,7 +86,7 @@ if (!empty($_GET)) {
             <a class="nav-link" href="pedidos.php?status=pendente">Pendentes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pedidos.php?status=finalizadas">Finalizadas</a>
+            <a class="nav-link" href="pedidos.php?status=finalizados">finalizados</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="pedidos.php?status=todas">Todas</a>
@@ -142,7 +147,6 @@ if (!empty($_GET)) {
                   </tr>
                   <?php
                   $itensDoPedido = array_unique($itensDoPedido, SORT_REGULAR);
-                  console_log($itensDoPedido);
                   foreach ($itensDoPedido as $item) {
                     $preco = floatval(str_replace(',', '.', str_replace('.', '', $item['vl_produto'])));
                     $quantidade = quantidadeDeItens($pedido['id'],$item['id_jogo']);

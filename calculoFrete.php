@@ -13,4 +13,3 @@ $resultado = calculaFrete(
   '8', '15', '20', 0 );
   $valor = floatval(str_replace(',', '.', str_replace('.', '', $resultado['valor'])));
   $freteTotal= floatval($valor * $quantidadeDeEmbalagens);
-  console_log($freteTotal);

@@ -1,6 +1,7 @@
 <?php
 require_once "funcoes.php";
 
+// Declaração de variavéis da sessão
 if (empty($_SESSION['carrinho'])) {
   $_SESSION['carrinho'] = [];
 }
@@ -12,9 +13,11 @@ if (empty($_SESSION['frete'])) {
 
 $carrinho = $_SESSION['carrinho'];
 
+// Adiciona o produto no carrinho
 if (!empty($_POST)) {
   $jogo = buscarJogo($_POST['id']);
   $estaNoCarrinho = false;
+  // Se o jogo já estiver no carrinho, aumenta em 1 a quantidade
   foreach ($carrinho as $indice => $jogoDoCarrinho) {
     if ($jogoDoCarrinho['nome']==$jogo['nome']) {
       $_SESSION['carrinho'][$indice]['quantidade'] +=  1;
@@ -22,6 +25,7 @@ if (!empty($_POST)) {
       break;
     }
   }
+  // Se o jogo não estiver no carrinho, adiciona-o
   if($estaNoCarrinho == false) {
     $jogo['quantidade'] = 1;
     array_push($_SESSION['carrinho'], $jogo);
@@ -29,8 +33,10 @@ if (!empty($_POST)) {
   header("Location:carrinho.php");
 }
 
+// Aumenta e diminui a quantidade, remove o produto e calcula o frete
 if (!empty($_GET)) {
   switch ($_GET['acao']) {
+    // Diminui em 1 a quantidade do produto
     case 'menos':
     foreach ($carrinho as $indice => $jogoDoCarrinho) {
       if ($jogoDoCarrinho['id']==$_GET['id']) {
@@ -39,6 +45,7 @@ if (!empty($_GET)) {
       }
     }
     break;
+    // Aumenta em 1 a quantidade do produto
     case 'mais':
     foreach ($carrinho as $indice => $jogoDoCarrinho) {
       if ($jogoDoCarrinho['id']==$_GET['id']) {
@@ -47,6 +54,7 @@ if (!empty($_GET)) {
       }
     }
     break;
+    // Remove o produto do carrinho
     case 'remover':
     foreach ($carrinho as $indice => $jogoDoCarrinho) {
       if ($jogoDoCarrinho['id']==$_GET['id']) {
@@ -55,6 +63,7 @@ if (!empty($_GET)) {
       }
     }
     break;
+    // Calcula o frete do pedido
     case 'frete':
     $quantidadeDeProdutos = $_GET['quantidade'];
     $quantidadeDeEmbalagens = ceil($quantidadeDeProdutos/5);
@@ -69,13 +78,14 @@ if (!empty($_GET)) {
       $valor = floatval(str_replace(',', '.', str_replace('.', '', $resultado['valor'])));
       $freteTotal= floatval($valor * $quantidadeDeEmbalagens);
       $_SESSION['frete']['valor']=$freteTotal;
-    break;
-    default:
-    // code...
-    break;
-  }
+      break;
+      default:
+      // code...
+      break;
+    }
     header("Location:carrinho.php");
   }
+
 
   $generos = listarGeneros();
   $plataformas = listarPlataformas();
@@ -184,10 +194,10 @@ if (!empty($_GET)) {
                     <td align="right"><?=money_format('%n',floatval($totalDaCompra))?></td>
                   </tr>
                   <?php if ($_SESSION['frete']['valor']!=0){ ?>
-                  <tr>
-                    <th scope="row">Frete</th>
-                    <td align="right"><?=money_format('%n',floatval($_SESSION['frete']['valor']))?></td>
-                  </tr>
+                    <tr>
+                      <th scope="row">Frete</th>
+                      <td align="right"><?=money_format('%n',floatval($_SESSION['frete']['valor']))?></td>
+                    </tr>
                   <?php } ?>
                   <tr>
                     <th scope="row">Total do pedido</th>
@@ -195,14 +205,14 @@ if (!empty($_GET)) {
                   </tr>
                 </table>
                 <?php
-                  $botao="secondary disabled";
-                 if ($_SESSION['frete']['valor'] > 0) {
-                    $botao="primary";
+                $botao="secondary disabled";
+                if ($_SESSION['frete']['valor'] > 0) {
+                  $botao="primary";
                 }
-                  ?>
-                  <div class="row justify-content-end m-2">
-                    <a class="btn btn-<?=$botao?>" href="checkout.php">Finalizar Compra</a>
-                  </div>
+                ?>
+                <div class="row justify-content-end m-2">
+                  <a class="btn btn-<?=$botao?>" href="checkout.php">Finalizar Compra</a>
+                </div>
               </div>
             </div>
 

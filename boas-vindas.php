@@ -1,22 +1,15 @@
 <?php
 require_once "funcoes.php";
 
+// Controle do nivel de acesso
 if (empty($_SESSION['login']) || $_SESSION['login']['acesso']=="cliente") {
   acessoRestrito();
   header("Location:login-funcionario.php");
 }
 
-if (!empty($_GET)) {
-  if ($_GET['acao'] == 'logout') {
-    unset($_SESSION['login']);
-    header('Location:index.php');
-  }
-}
-
+// Atribuição de valor às variáveis principais
 $funcionario=buscarFuncionario($_SESSION['login']['id']);
-
 ?>
-
 
 <!doctype html>
 <html lang="en">

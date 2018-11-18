@@ -1,23 +1,24 @@
 <?php
 require_once "funcoes.php";
 
+// Pré=requisito [login]
 if (empty($_SESSION['login']) || empty($_SESSION['carrinho'])) {
   necessarioLogin();
   header("Location:login.php");
 }
 
-
+// Pré=requisito [frete]
 if ($_SESSION['frete']['valor'] <= 0) {
   necessarioFrete();
   header("Location:carrinho.php");
 }
 
-
+// Atribuição de valor às variaveis principais
 $carrinho = $_SESSION['carrinho'];
-
 $generos = listarGeneros();
 $plataformas = listarPlataformas();
 ?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>

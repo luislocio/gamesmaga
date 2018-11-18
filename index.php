@@ -1,28 +1,34 @@
 <?php
 require_once "funcoes.php";
 
+// Cria a lista de jogos a serem mostrados na tela
 $jogos = listarJogos();
 if (!empty($_GET)) {
+  // Filtra por genero
   if (!empty($_GET['idGenero'])) {
     $jogos = filtroPorGenero($_GET['idGenero']);
   }
+  // Filtra por plataforma
   if (!empty($_GET['idPlataforma'])) {
     $jogos = filtroPorPlataforma($_GET['idPlataforma']);
   }
+  // Filtra de acordo com a busca
   if (!empty($_GET['busca'])) {
     $jogos = barraDeBusca($_GET['busca']);
   }
 }
 
-$generos = listarGeneros();
-$plataformas = listarPlataformas();
-
+// Realiza o logout do usuário
 if (!empty($_GET)) {
   if (!empty($_GET['acao']) && $_GET['acao'] == 'logout') {
     unset($_SESSION['login']);
     header('Location:index.php');
   }
 }
+
+// Atribuição de valor às variaveis principais
+$generos = listarGeneros();
+$plataformas = listarPlataformas();
 ?>
 
 <!DOCTYPE html>

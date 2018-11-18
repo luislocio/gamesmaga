@@ -1,29 +1,35 @@
 <?php
 require_once "funcoes.php";
 
+// Controle do nivel de acesso
 if (($_SESSION['login']['acesso']=="cliente") || (empty($_SESSION['login']))) {
   acessoRestrito();
   header("Location:login-funcionario.php");
 }
 
+// Declaração de variáveis do formulário.
 $id="";
 $plataforma="";
 $fabricante="";
 
+// Edição e exclusão de elementos
 if (!empty($_GET)) {
   $id = $_GET['id'];
+  // Carrega dados no formulário para edição
   if ($_GET['acao'] == 'editar') {
     $editarPlataforma = buscarPlataforma($id);
     $id = $editarPlataforma['id'];
     $plataforma = $editarPlataforma['nm_plataforma'];
     $fabricante = $editarPlataforma['fabricante'];
   }
+  // Exclui elemento
   if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
     excluirPlataforma($id);
     header("location: cadastro-plataforma.php");
   }
 }
 
+// Salvar elemento
 if (!empty($_POST)) {
   if (empty($_POST['id'])) {
     salvarPlataforma($_POST);
@@ -33,8 +39,8 @@ if (!empty($_POST)) {
   header("location: cadastro-plataforma.php");
 }
 
+// Atribuição de valor às variaveis principais
 $plataformas = listarPlataformas();
-
 ?>
 
 <!DOCTYPE html>

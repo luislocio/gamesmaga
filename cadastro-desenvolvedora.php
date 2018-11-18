@@ -1,27 +1,33 @@
 <?php
 require_once "funcoes.php";
 
+// Controle do nivel de acesso
 if (($_SESSION['login']['acesso']=="cliente") || (empty($_SESSION['login']))) {
   acessoRestrito();
   header("Location:login-funcionario.php");
 }
 
+// Declaração de variáveis do formulário
 $id="";
 $desenvolvedora="";
 
+// Edição e exclusão de elementos
 if (!empty($_GET)) {
   $id = $_GET['id'];
+  // Carrega dados no formulário para edição
   if ($_GET['acao'] == 'editar') {
     $editarDesenvolvedora = buscarDesenvolvedora($id);
     $id = $editarDesenvolvedora['id'];
     $desenvolvedora = $editarDesenvolvedora['nm_desenvolvedora'];
   }
+  // Exclui elemento
   if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
     excluirDesenvolvedora($id);
     header("location: cadastro-desenvolvedora.php");
   }
 }
 
+// Salvar elemento
 if (!empty($_POST)) {
   if (empty($_POST['id'])) {
     salvarDesenvolvedora($_POST);
@@ -31,6 +37,7 @@ if (!empty($_POST)) {
   header("location: cadastro-desenvolvedora.php");
 }
 
+// Atribuição de valor às variaveis principais
 $desenvolvedoras = listarDesenvolvedoras();
 
 ?>

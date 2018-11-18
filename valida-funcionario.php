@@ -1,14 +1,16 @@
 <?php
 require_once "funcoes.php";
 
+// Declaração de variáveis da sessão
 if (empty($_SESSION['login'])) {
   $_SESSION['login'] = [];
 }
+
+// Instancia conexão com o banco de dados
 $conn = conectar();
 
 $login = $_POST['login'];
 $senha = $_POST['senha'];
-
 $statement = $conn->prepare("SELECT login, senha, id, acesso FROM FUNCIONARIOS WHERE login=:login LIMIT 1");
 $statement->bindParam(':login', $login);
 $statement->execute();

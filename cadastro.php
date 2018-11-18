@@ -1,10 +1,13 @@
 <?php
 require_once "funcoes.php";
 
+// Controle do nivel de acesso
 if (!empty($_SESSION['login'])) {
     header("Location:index.php");
 }
 
+
+// Declaração de variáveis do formulário.
 $id="";
 $email="";
 $login="";
@@ -24,8 +27,10 @@ $bairro="";
 $cidade="";
 $estado="";
 
+// Edição e exclusão de elementos
 if (!empty($_GET)) {
     $id = $_GET['id'];
+    // Carrega dados no formulário para edição
     if ($_GET['acao'] == 'editar') {
         $editarCliente = buscarCliente($id);
         $id=$editarCliente['id'];
@@ -49,16 +54,17 @@ if (!empty($_GET)) {
     }
 }
 
+// Salvar elemento
 if (!empty($_POST)) {
     $_POST['senha']=md5($_POST['senha']);
     if (empty($_POST['id'])) {
         salvarCliente($_POST);
     }
-    header("location: cadastro.php");
+    header("location: index.php");
 }
 
+// Atribuição de valor às variaveis principais
 $clientes = listarClientes();
-
 ?>
 
 <!DOCTYPE html>

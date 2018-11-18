@@ -145,7 +145,6 @@ $plataformas = listarPlataformas();
                       </tr>
                       <?php
                       $itensDoPedido = array_unique($itensDoPedido, SORT_REGULAR);
-                      console_log($itensDoPedido);
                       foreach ($itensDoPedido as $item) {
                         $preco = floatval(str_replace(',', '.', str_replace('.', '', $item['vl_produto'])));
                         $quantidade = quantidadeDeItens($pedido['id'],$item['id_jogo']);

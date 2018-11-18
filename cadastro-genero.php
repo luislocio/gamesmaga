@@ -1,28 +1,33 @@
 <?php
 require_once "funcoes.php";
 
+// Controle do nivel de acesso
 if (($_SESSION['login']['acesso']=="cliente") || (empty($_SESSION['login']))) {
   acessoRestrito();
   header("Location:login-funcionario.php");
 }
 
+// Declaração de variáveis do formulário
 $id="";
 $genero="";
 
+// Edição e exclusão de elementos
 if (!empty($_GET)) {
-  console_log($_SESSION);
   $id = $_GET['id'];
+  // Carrega dados no formulário para edição
   if ($_GET['acao'] == 'editar') {
     $editarGenero = buscarGenero($id);
     $id = $editarGenero['id'];
     $genero = $editarGenero['nm_genero'];
   }
+  // Exclui elemento
   if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
     excluirGenero($id);
     header("location: cadastro-genero.php");
   }
 }
 
+// Salvar elemento
 if (!empty($_POST)) {
   if (empty($_POST['id'])) {
     salvarGenero($_POST);
@@ -32,11 +37,8 @@ if (!empty($_POST)) {
   header("location: cadastro-genero.php");
 }
 
+// Atribuição de valor às variaveis principais
 $generos = listarGeneros();
-
-//echo "<br/><br/><br/><br/>";
-//print_r($desenvolvedoras);
-
 ?>
 
 <!DOCTYPE html>

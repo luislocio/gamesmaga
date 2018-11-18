@@ -1,27 +1,33 @@
 <?php
 require_once "funcoes.php";
 
+// Controle do nivel de acesso
 if (($_SESSION['login']['acesso']=="cliente") || (empty($_SESSION['login']))) {
   acessoRestrito();
   header("Location:login-funcionario.php");
 }
 
+// Declaração de variáveis do formulário.
 $id="";
 $distribuidora="";
 
+// Edição e exclusão de elementos
 if (!empty($_GET)) {
   $id = $_GET['id'];
+  // Carrega dados no formulário para edição
   if ($_GET['acao'] == 'editar') {
     $editarDistribuidora = buscarDistribuidora($id);
     $id = $editarDistribuidora['id'];
     $distribuidora = $editarDistribuidora['nm_distribuidora'];
   }
+  // Exclui elemento
   if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
     excluirDistribuidora($id);
     header("location: cadastro-distribuidora.php");
   }
 }
 
+// Salvar elemento
 if (!empty($_POST)) {
   if (empty($_POST['id'])) {
     salvarDistribuidora($_POST);
@@ -31,6 +37,7 @@ if (!empty($_POST)) {
   header("location: cadastro-distribuidora.php");
 }
 
+// Atribuição de valor às variaveis principais
 $distribuidoras = listarDistribuidoras();
 ?>
 

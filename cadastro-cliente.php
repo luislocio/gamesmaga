@@ -1,11 +1,13 @@
 <?php
 require_once "funcoes.php";
 
+// Controle do nivel de acesso
 if (empty($_SESSION['login']) || $_SESSION['login']['acesso']!="admin") {
   acessoRestrito();
   header("Location:login-funcionario.php");
 }
 
+// Declaração de variáveis do formulário
 $id="";
 $email="";
 $login="";
@@ -25,9 +27,10 @@ $bairro="";
 $cidade="";
 $estado="";
 
-
+// Edição e exclusão de elementos
 if (!empty($_GET)) {
   $id = $_GET['id'];
+  // Carrega dados no formulário para edição
   if ($_GET['acao'] == 'editar') {
     $editarCliente = buscarCliente($id);
     $id=$editarCliente['id'];
@@ -49,15 +52,16 @@ if (!empty($_GET)) {
     $cidade=$editarCliente['cidade'];
     $estado=$editarCliente['estado'];
   }
+  // Exclui elemento
   if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] == 'admin') {
     excluirCliente($id);
     header("location: cadastro-cliente.php");
   }
 }
 
+// Salvar elemento
 if (!empty($_POST)) {
   $_POST['senha']=md5($_POST['senha']);
-  console_log($_POST);
   if (empty($_POST['id'])) {
     salvarCliente($_POST);
   } else {
@@ -66,8 +70,8 @@ if (!empty($_POST)) {
   header("location: cadastro-cliente.php");
 }
 
+// Atribuição de valor às variaveis principais
 $clientes = listarClientes();
-
 ?>
 
 <!DOCTYPE html>

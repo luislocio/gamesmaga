@@ -1,12 +1,14 @@
 <?php
 require_once "funcoes.php";
 
+// Verifica se algum jogo está sendo carregado
 if (!empty($_GET)) {
     $jogo = buscarJogo($_GET['id']);
 } else {
     header("Location:index.php");
 }
 
+// Atribuição de valor às variaveis principais
 $generos=listarGeneros();
 $plataformas=listarPlataformas();
 $plataforma=buscarPlataforma($jogo['plataforma']);

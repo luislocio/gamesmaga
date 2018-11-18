@@ -1,16 +1,17 @@
 <?php
 require_once "funcoes.php";
 
+// Controle do nivel de acesso
 if (($_SESSION['login']['acesso']=="cliente") || (empty($_SESSION['login']))) {
   acessoRestrito();
   header("Location:login-funcionario.php");
 }
 
 if (!empty($_GET)) {
-  if ($_GET['acao'] == 'logout') {
-    unset($_SESSION['login']);
-    header('Location:index.php');
-  }
+    if ($_GET['acao'] == 'logout') {
+        unset($_SESSION['login']);
+        header('Location:login-funcionario.php');
+    }
 }
 ?>
 

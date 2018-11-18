@@ -1,15 +1,9 @@
 <?php
 require_once "funcoes.php";
 
+// Controle do nivel de acesso
 if (!empty($_SESSION['login']) && $_SESSION['login']['acesso']!="cliente") {
     header("Location:cadastro-home.php");
-}
-
-if (!empty($_GET)) {
-    if ($_GET['acao'] == 'logout') {
-        unset($_SESSION['login']);
-        header('Location:login-funcionario.php');
-    }
 }
 ?>
 

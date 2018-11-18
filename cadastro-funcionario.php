@@ -1,18 +1,22 @@
 <?php
 require_once "funcoes.php";
 
+// Controle do nivel de acesso
 if (empty($_SESSION['login']) || $_SESSION['login']['acesso']!="admin") {
   acessoRestrito();
   header("Location:login-funcionario.php");
 }
 
+// Declaração de variáveis do formulário.
 $id="";
 $login="";
 $senha="";
 $acesso="";
 
+// Edição e exclusão de elementos
 if (!empty($_GET)) {
   $id = $_GET['id'];
+  // Carrega dados no formulário para edição
   if ($_GET['acao'] == 'editar') {
     $editarFuncionario = buscarFuncionario($id);
     $id=$editarFuncionario['id'];
@@ -20,12 +24,14 @@ if (!empty($_GET)) {
     $senha=$editarFuncionario['senha'];
     $acesso=$editarFuncionario['acesso'];
   }
+  // Exclui elemento
   if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] == 'admin') {
     excluirFuncionario($id);
     header("location: cadastro-funcionario.php");
   }
 }
 
+// Salvar elemento
 if (!empty($_POST)) {
   $_POST['senha']=md5($_POST['senha']);
   if (empty($_POST['id'])) {
@@ -36,6 +42,7 @@ if (!empty($_POST)) {
   header("location: cadastro-funcionario.php");
 }
 
+// Atribuição de valor às variaveis principais
 $funcionarios = listarFuncionarios();
 ?>
 

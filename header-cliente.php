@@ -1,8 +1,8 @@
 <?php
+// Declaração de variavéis da sessão
 if (empty($_SESSION['login'])) {
     $_SESSION['login'] = [];
 }
-
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -17,11 +17,11 @@ if (empty($_SESSION['login'])) {
           <a class="nav-link" >(41) 3035-9095</a>
         </li>
         <?php if (!empty($_SESSION['login']['id'])) {
-    if ($_SESSION['login']['acesso']=="cliente") {
-        $usuario=buscarCliente($_SESSION['login']['id']);
-    } else {
-        $usuario=buscarFuncionario($_SESSION['login']['id']);
-    } ?>
+          if ($_SESSION['login']['acesso']=="cliente") {
+            $usuario=buscarCliente($_SESSION['login']['id']);
+          } else {
+            $usuario=buscarFuncionario($_SESSION['login']['id']);
+          } ?>
           <li class="nav-item active border-right px-3">
             <a class="nav-link" href="dashboard.php">Olá, <?=$usuario['login']?> </a>
           </li>

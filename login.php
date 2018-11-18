@@ -1,6 +1,7 @@
 <?php
 require_once "funcoes.php";
 
+// Controle do nivel de acesso
 if (!empty($_SESSION['login'])) {
     header("Location:index.php");
 }
