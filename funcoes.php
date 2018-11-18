@@ -24,6 +24,14 @@ function console_log($data)
   echo '</script>';
 }
 
+function showAlert(){
+  if (!empty($_SESSION['mensagem'])) {
+    echo '<script>';
+    echo 'alert('. json_encode($_SESSION['mensagem']) .')';
+    echo '</script>';
+  }
+}
+
 # ---------- CLIENTES ----------
 function buscarCliente($id)
 {
