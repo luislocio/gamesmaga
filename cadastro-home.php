@@ -5,12 +5,14 @@ require_once "funcoes.php";
 if (($_SESSION['login']['acesso']=="cliente") || (empty($_SESSION['login']))) {
   acessoRestrito();
   header("Location:login-funcionario.php");
+  exit;
 }
 
 if (!empty($_GET)) {
     if ($_GET['acao'] == 'logout') {
         unset($_SESSION['login']);
         header('Location:login-funcionario.php');
+        exit;
     }
 }
 ?>

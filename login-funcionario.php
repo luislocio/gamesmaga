@@ -38,6 +38,6 @@ if (!empty($_SESSION['login']) && $_SESSION['login']['acesso']!="cliente") {
   <!-- Bootstrap core JavaScript -->
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <?php showAlert() ?>
+  <?php showAlert(); ?>
 </body>
 </html>

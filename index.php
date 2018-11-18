@@ -23,6 +23,7 @@ if (!empty($_GET)) {
   if (!empty($_GET['acao']) && $_GET['acao'] == 'logout') {
     unset($_SESSION['login']);
     header('Location:index.php');
+    exit;
   }
 }
 ?>

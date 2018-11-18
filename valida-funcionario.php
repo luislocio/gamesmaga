@@ -22,11 +22,14 @@ if ($retorno) {
     $_SESSION['login']['id']=$retorno['id'];
     $_SESSION['login']['acesso']=$retorno['acesso'];
     header('Location: boas-vindas.php');
+    exit;
   }else {
     loginInvalido();
     header('Location: login-funcionario.php');
+    exit;
   }
 } else {
   loginInvalido();
   header('Location: login-funcionario.php');
+  exit;
 }

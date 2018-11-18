@@ -5,6 +5,7 @@ require_once "funcoes.php";
 if (($_SESSION['login']['acesso']=="cliente") || (empty($_SESSION['login']))) {
   acessoRestrito();
   header("Location:login-funcionario.php");
+  exit;
 }
 
 // Declaração de variáveis do formulário.
@@ -71,6 +72,7 @@ if (!empty($_GET)) {
   if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
     excluirJogo($id);
     header("location: cadastro-jogo.php");
+    exit;
   }
 }
 
@@ -83,6 +85,7 @@ if (!empty($_POST)) {
     editarJogo($_POST);
   }
   header("location: cadastro-jogo.php");
+  exit;
 }
 
 // Atribuição de valor às variaveis do menu dropdown

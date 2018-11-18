@@ -5,6 +5,7 @@ require_once "funcoes.php";
 if (empty($_SESSION['login']) || $_SESSION['login']['acesso']!="admin") {
   acessoRestrito();
   header("Location:login-funcionario.php");
+  exit;
 }
 
 // Declaração de variáveis do formulário
@@ -56,6 +57,7 @@ if (!empty($_GET)) {
   if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] == 'admin') {
     excluirCliente($id);
     header("location: cadastro-cliente.php");
+    exit;
   }
 }
 
@@ -68,6 +70,7 @@ if (!empty($_POST)) {
     editarCliente($_POST);
   }
   header("location: cadastro-cliente.php");
+  exit;
 }
 
 // Atribuição de valor às variaveis principais

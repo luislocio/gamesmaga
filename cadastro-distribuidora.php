@@ -5,6 +5,7 @@ require_once "funcoes.php";
 if (($_SESSION['login']['acesso']=="cliente") || (empty($_SESSION['login']))) {
   acessoRestrito();
   header("Location:login-funcionario.php");
+  exit;
 }
 
 // Declaração de variáveis do formulário.
@@ -24,6 +25,7 @@ if (!empty($_GET)) {
   if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
     excluirDistribuidora($id);
     header("location: cadastro-distribuidora.php");
+    exit;
   }
 }
 
@@ -35,6 +37,7 @@ if (!empty($_POST)) {
     editarDistribuidora($_POST);
   }
   header("location: cadastro-distribuidora.php");
+  exit;
 }
 
 // Atribuição de valor às variaveis principais

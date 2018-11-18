@@ -6,6 +6,7 @@ if (!empty($_GET)) {
     $jogo = buscarJogo($_GET['id']);
 } else {
     header("Location:index.php");
+    exit;
 }
 
 // Atribuição de valor às variaveis principais

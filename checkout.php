@@ -2,17 +2,18 @@
 require_once "funcoes.php";
 
 // Pré=requisito [login]
-if (empty($_SESSION['login']) || empty($_SESSION['carrinho'])) {
+if (empty($_SESSION['login'])) {
   necessarioLogin();
   header("Location:login.php");
+  exit;
+} else {
+  // Pré=requisito [frete]
+  if ($_SESSION['frete']['valor'] <= 0) {
+    necessarioFrete();
+    header("Location:carrinho.php");
+    exit;
+  }
 }
-
-// Pré=requisito [frete]
-if ($_SESSION['frete']['valor'] <= 0) {
-  necessarioFrete();
-  header("Location:carrinho.php");
-}
-
 // Atribuição de valor às variaveis principais
 $carrinho = $_SESSION['carrinho'];
 ?>

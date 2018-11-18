@@ -5,6 +5,7 @@ require_once "funcoes.php";
 if (empty($_SESSION['login'])) {
   necessarioLogin();
   header("Location:login.php");
+  exit;
 }
 
 if (empty($pedidos)) {

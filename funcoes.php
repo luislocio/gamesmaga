@@ -59,6 +59,22 @@ function loginInvalido(){
   $_SESSION["mensagem"] = "Usuario ou senha inválidos.";
 }
 
+function sucessoCadastro(){
+  $_SESSION["mensagem"] = "Cadastro realizado com sucesso.";
+}
+
+function sucessoEdicao(){
+  $_SESSION["mensagem"] = "Edição realizada com sucesso.";
+}
+
+function sucessoRemocao(){
+  $_SESSION["mensagem"] = "Remoção realizada com sucesso.";
+}
+
+function falhaCrud(){
+  $_SESSION["mensagem"] = "Não foi possivel prosseguir. Entre em contato com o administrador";
+}
+
 # ---------- CLIENTES ----------
 function buscarCliente($id)
 {
@@ -91,8 +107,9 @@ function editarCliente($cliente)
   $stmt->bindParam(':cidade', $cliente['cidade']);
   $stmt->bindParam(':estado', $cliente['estado']);
   if ($stmt->execute()) {
-    console_log("Cliente alterado com sucesso!");
+    sucessoEdicao();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }
@@ -105,8 +122,9 @@ function excluirCliente($id)
   $stmt->bindParam(':id', $id);
   $stmt->execute();
   if ($stmt->execute()) {
-    console_log("Cliente removido com sucesso!");
+    sucessoRemocao();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }
@@ -143,8 +161,9 @@ function salvarCliente($cliente)
   $stmt->bindParam(':cidade', $cliente['cidade']);
   $stmt->bindParam(':estado', $cliente['estado']);
   if ($stmt->execute()) {
-    console_log("Cliente inserido com sucesso!");
+    sucessoCadastro();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }
@@ -167,8 +186,9 @@ function editarDesenvolvedora($desenvolvedora)
   $stmt->bindParam(':nm_desenvolvedora', $desenvolvedora['desenvolvedora']);
   $stmt->bindParam(':id', $desenvolvedora['id']);
   if ($stmt->execute()) {
-    console_log("Desenvolvedora alterada com sucesso!");
+    sucessoEdicao();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }
@@ -181,8 +201,9 @@ function excluirDesenvolvedora($id)
   $stmt->bindParam(':id', $id);
   $stmt->execute();
   if ($stmt->execute()) {
-    console_log("Desenvolvedora removida com sucesso!");
+    sucessoRemocao();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }
@@ -203,8 +224,9 @@ function salvarDesenvolvedora($desenvolvedora)
   $stmt = $conn->prepare("INSERT INTO DESENVOLVEDORAS(nm_desenvolvedora) VALUES(:nm_desenvolvedora)");
   $stmt->bindParam(':nm_desenvolvedora', $desenvolvedora['desenvolvedora']);
   if ($stmt->execute()) {
-    console_log("Desenvolvedora inserida com sucesso!");
+    sucessoCadastro();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }
@@ -227,8 +249,9 @@ function editarDistribuidora($distribuidora)
   $stmt->bindParam(':nm_distribuidora', $distribuidora['distribuidora']);
   $stmt->bindParam(':id', $distribuidora['id']);
   if ($stmt->execute()) {
-    console_log("Distribuidora alterada com sucesso!");
+    sucessoEdicao();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }
@@ -241,10 +264,10 @@ function excluirDistribuidora($id)
   $stmt->bindParam(':id', $id);
   $stmt->execute();
   if ($stmt->execute()) {
-    console_log("Distribuidora removida com sucesso!");
+    sucessoRemocao();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
-
     return "erro! ";
   }
 }
@@ -264,8 +287,9 @@ function salvarDistribuidora($distribuidora)
   $stmt = $conn->prepare("INSERT INTO DISTRIBUIDORAS(nm_distribuidora) VALUES(:nm_distribuidora)");
   $stmt->bindParam(':nm_distribuidora', $distribuidora['distribuidora']);
   if ($stmt->execute()) {
-    console_log("Distribuidora inserida com sucesso!");
+    sucessoCadastro();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }
@@ -289,8 +313,9 @@ function editarFuncionario($funcionario)
   $stmt->bindParam(':acesso', $funcionario['acesso']);
   $stmt->bindParam(':id', $funcionario['id']);
   if ($stmt->execute()) {
-    console_log("Funcionario alterado com sucesso!");
+    sucessoEdicao();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }
@@ -303,8 +328,9 @@ function excluirFuncionario($id)
   $stmt->bindParam(':id', $id);
   $stmt->execute();
   if ($stmt->execute()) {
-    console_log("Funcionario removido com sucesso!");
+    sucessoRemocao();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }
@@ -327,8 +353,9 @@ function salvarFuncionario($funcionario)
   $stmt->bindParam(':senha', $funcionario['senha']);
   $stmt->bindParam(':acesso', $funcionario['acesso']);
   if ($stmt->execute()) {
-    console_log("Funcionario inserido com sucesso!");
+    sucessoCadastro();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }
@@ -350,8 +377,9 @@ function editarGenero($genero)
   $stmt->bindParam(':nm_genero', $genero['genero']);
   $stmt->bindParam(':id', $genero['id']);
   if ($stmt->execute()) {
-    console_log("Genero alterado com sucesso!");
+    sucessoEdicao();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }
@@ -364,10 +392,10 @@ function excluirGenero($id)
   $stmt->bindParam(':id', $id);
   $stmt->execute();
   if ($stmt->execute()) {
-    console_log("Genero removido com sucesso!");
+    sucessoRemocao();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
-
     return "erro! ";
   }
 }
@@ -387,8 +415,9 @@ function salvarGenero($genero)
   $stmt = $conn->prepare("INSERT INTO GENEROS(nm_genero) VALUES(:nm_genero)");
   $stmt->bindParam(':nm_genero', $genero['genero']);
   if ($stmt->execute()) {
-    console_log("Genero inserida com sucesso!");
+    sucessoCadastro();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }
@@ -411,8 +440,6 @@ function editarJogo($jogo)
     $jogoAlterado=buscarJogo($jogo['id']);
     $jogo['url'] = $jogoAlterado['url'];
   }
-
-
   $conn = conectar();
   $stmt = $conn->prepare('update JOGOS set nome=:nome, ano=:ano, desenvolvedora=:desenvolvedora, distribuidora=:distribuidora, plataforma=:plataforma, genero=:genero, preco=:preco, url=:url, descricao=:descricao where id = :id');
   $stmt->bindParam(':id', $jogo['id']);
@@ -426,8 +453,9 @@ function editarJogo($jogo)
   $stmt->bindParam(':url', $jogo['url']);
   $stmt->bindParam(':descricao', $jogo['descricao']);
   if ($stmt->execute()) {
-    console_log("Jogo alterada com sucesso!");
+    sucessoEdicao();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }
@@ -440,10 +468,10 @@ function excluirJogo($id)
   $stmt->bindParam(':id', $id);
   $stmt->execute();
   if ($stmt->execute()) {
-    console_log("Jogo removido com sucesso!");
+    sucessoRemocao();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
-
     return "erro! ";
   }
 }
@@ -471,7 +499,7 @@ function salvarJogo($jogo)
   $stmt->bindParam(':url', $jogo['url']);
   $stmt->bindParam(':descricao', $jogo['descricao']);
   if ($stmt->execute()) {
-    console_log("Jogo inserido com sucesso!");
+    sucessoCadastro();
   } else {
     console_log($stmt->errorInfo());
     return "erro! ";
@@ -700,8 +728,9 @@ function editarPlataforma($plataforma)
   $stmt->bindParam(':fabricante', $plataforma['fabricante']);
   $stmt->bindParam(':id', $plataforma['id']);
   if ($stmt->execute()) {
-    console_log("Plataforma alterada com sucesso!");
+    sucessoEdicao();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }
@@ -714,10 +743,10 @@ function excluirPlataforma($id)
   $stmt->bindParam(':id', $id);
   $stmt->execute();
   if ($stmt->execute()) {
-    console_log("Plataforma removida com sucesso!");
+    sucessoRemocao();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
-
     return "erro! ";
   }
 }
@@ -738,8 +767,9 @@ function salvarPlataforma($plataforma)
   $stmt->bindParam(':nm_plataforma', $plataforma['plataforma']);
   $stmt->bindParam(':fabricante', $plataforma['fabricante']);
   if ($stmt->execute()) {
-    console_log("Plataforma inserida com sucesso!");
+    sucessoCadastro();
   } else {
+    falhaCrud();
     console_log($stmt->errorInfo());
     return "erro! ";
   }

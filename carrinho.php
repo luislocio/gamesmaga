@@ -31,6 +31,7 @@ if (!empty($_POST)) {
     array_push($_SESSION['carrinho'], $jogo);
   }
   header("Location:carrinho.php");
+  exit;
 }
 
 // Aumenta e diminui a quantidade, remove o produto e calcula o frete
@@ -84,6 +85,7 @@ if (!empty($_GET)) {
       break;
     }
     header("Location:carrinho.php");
+    exit;
   }
   ?>
   <!DOCTYPE html>

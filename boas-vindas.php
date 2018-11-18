@@ -5,6 +5,7 @@ require_once "funcoes.php";
 if (empty($_SESSION['login']) || $_SESSION['login']['acesso']=="cliente") {
   acessoRestrito();
   header("Location:login-funcionario.php");
+  exit;
 }
 
 // Atribuição de valor às variáveis principais

@@ -5,6 +5,7 @@ require_once "funcoes.php";
 if (($_SESSION['login']['acesso']=="cliente") || (empty($_SESSION['login']))) {
   acessoRestrito();
   header("Location:login-funcionario.php");
+  exit;
 }
 
 // Declaração de variáveis do formulário.
@@ -26,6 +27,7 @@ if (!empty($_GET)) {
   if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] != 'logistica') {
     excluirPlataforma($id);
     header("location: cadastro-plataforma.php");
+    exit;
   }
 }
 
@@ -37,6 +39,7 @@ if (!empty($_POST)) {
     editarPlataforma($_POST);
   }
   header("location: cadastro-plataforma.php");
+  exit;
 }
 
 // Atribuição de valor às variaveis principais

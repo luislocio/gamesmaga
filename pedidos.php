@@ -5,6 +5,7 @@ require_once "funcoes.php";
 if (empty($_SESSION['login'])) {
   necessarioLogin();
   header("Location:login.php");
+  exit;
 }
 
 // Cria a lista de pedidos a serem mostrados na tela
