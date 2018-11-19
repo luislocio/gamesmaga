@@ -3,9 +3,9 @@ require_once "funcoes.php";
 
 // Controle do nivel de acesso
 if (empty($_SESSION['login']) || $_SESSION['login']['acesso']=="cliente") {
-  acessoRestrito();
-  header("Location:login-funcionario.php");
-  exit;
+    acessoRestrito();
+    header("Location:login-funcionario.php");
+    exit;
 }
 
 // Atribuição de valor às variáveis principais
@@ -16,7 +16,7 @@ $funcionario=buscarFuncionario($_SESSION['login']['id']);
 <html lang="en">
 <head>
   <!-- Informações padrões do head -->
-  <?php include_once("head.php");?>
+    <?php require_once "head.php";?>
 
   <title>GamEsmaga - Sistema de Cadastro</title>
   <link href="css/cover.css" rel="stylesheet">
@@ -32,7 +32,7 @@ $funcionario=buscarFuncionario($_SESSION['login']['id']);
     </header>
     <main role="main" class="inner cover my-auto">
       <img src="img/pacman.svg" alt="">
-      <h1 class="cover-heading">Seja bem vindo, <?=$funcionario['login']?>.</h1>
+      <h1 class="cover-heading">Seja bem vindo, <?php echo $funcionario['login']?>.</h1>
     </main>
 </div>
 

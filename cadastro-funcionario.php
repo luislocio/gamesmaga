@@ -3,9 +3,9 @@ require_once "funcoes.php";
 
 // Controle do nivel de acesso
 if (empty($_SESSION['login']) || $_SESSION['login']['acesso']!="admin") {
-  acessoRestrito();
-  header("Location:login-funcionario.php");
-  exit;
+    acessoRestrito();
+    header("Location:login-funcionario.php");
+    exit;
 }
 
 // Declaração de variáveis do formulário.
@@ -16,33 +16,33 @@ $acesso="";
 
 // Edição e exclusão de elementos
 if (!empty($_GET)) {
-  $id = $_GET['id'];
-  // Carrega dados no formulário para edição
-  if ($_GET['acao'] == 'editar') {
-    $editarFuncionario = buscarFuncionario($id);
-    $id=$editarFuncionario['id'];
-    $login=$editarFuncionario['login'];
-    $senha=$editarFuncionario['senha'];
-    $acesso=$editarFuncionario['acesso'];
-  }
-  // Exclui elemento
-  if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] == 'admin') {
-    excluirFuncionario($id);
-    header("location: cadastro-funcionario.php");
-    exit;
-  }
+    $id = $_GET['id'];
+    // Carrega dados no formulário para edição
+    if ($_GET['acao'] == 'editar') {
+        $editarFuncionario = buscarFuncionario($id);
+        $id=$editarFuncionario['id'];
+        $login=$editarFuncionario['login'];
+        $senha=$editarFuncionario['senha'];
+        $acesso=$editarFuncionario['acesso'];
+    }
+    // Exclui elemento
+    if ($_GET['acao'] == 'excluir' && $_SESSION['login']['acesso'] == 'admin') {
+        excluirFuncionario($id);
+        header("location: cadastro-funcionario.php");
+        exit;
+    }
 }
 
 // Salvar elemento
 if (!empty($_POST)) {
-  $_POST['senha']=md5($_POST['senha']);
-  if (empty($_POST['id'])) {
-    salvarFuncionario($_POST);
-  } else {
-    editarFuncionario($_POST);
-  }
-  header("location: cadastro-funcionario.php");
-  exit;
+    $_POST['senha']=md5($_POST['senha']);
+    if (empty($_POST['id'])) {
+        salvarFuncionario($_POST);
+    } else {
+        editarFuncionario($_POST);
+    }
+    header("location: cadastro-funcionario.php");
+    exit;
 }
 
 // Atribuição de valor às variaveis principais
@@ -53,7 +53,7 @@ $funcionarios = listarFuncionarios();
 <html lang="en" dir="ltr">
 <head>
   <!-- Informações padrões do head -->
-  <?php include_once("head.php");?>
+    <?php require_once "head.php";?>
 
   <title>Cadastro - Funcionarios</title>
   <link rel="stylesheet" href="css/shop-homepage.css">
@@ -65,23 +65,23 @@ $funcionarios = listarFuncionarios();
   </script>
 </head >
 
-<body onload="carregarDados('<?=$acesso?>')";>
-  <?php include_once("header-funcionario.php"); ?>
+<body onload="carregarDados('<?php echo $acesso?>')";>
+    <?php require_once "header-funcionario.php"; ?>
 
   <!-- Begin page content -->
   <main role="main" class="container">
     <h3>Cadastro de Funcionarios</h3>
     <form action="cadastro-funcionario.php" method="POST">
-      <input type="hidden" name="id" value="<?=$id?>">
+      <input type="hidden" name="id" value="<?php echo $id?>">
       <div class="container">
 
         <div class="form-group">
           <label for="login">Login</label>
-          <input type="text" class="form-control" name="login" id="login" placeholder="Nome de usuário" value="<?=$login?>" required>
+          <input type="text" class="form-control" name="login" id="login" placeholder="Nome de usuário" value="<?php echo $login?>" required>
         </div>
         <div class="form-group">
           <label for="login">Senha</label>
-          <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha do usuário" value="<?=$login?>" required>
+          <input type="password" class="form-control" name="senha" id="senha" placeholder="Senha do usuário" value="<?php echo $login?>" required>
         </div>
         <!-- MENU DROPDOWN -->
         <div class="form-group">
@@ -111,20 +111,20 @@ $funcionarios = listarFuncionarios();
         <?php } ?>
       </tr>
 
-      <?php foreach ($funcionarios as $funcionario) { ?>
+        <?php foreach ($funcionarios as $funcionario) { ?>
         <tr>
-          <td><?=$funcionario['id']?></td>
-          <td><?=$funcionario['login']?></td>
-          <td><?=$funcionario['senha']?></td>
-          <td><?=$funcionario['acesso']?></td>
-          <td class="text-center"><a class="btn btn-primary" href="cadastro-funcionario.php?acao=editar&id=<?=$funcionario['id']?>">Editar</a></td>
-          <td class="text-center"><a class="btn btn-danger" href="cadastro-funcionario.php?acao=excluir&id=<?=$funcionario['id']?>">Excluir</a></td>
+          <td><?php echo $funcionario['id']?></td>
+          <td><?php echo $funcionario['login']?></td>
+          <td><?php echo $funcionario['senha']?></td>
+          <td><?php echo $funcionario['acesso']?></td>
+          <td class="text-center"><a class="btn btn-primary" href="cadastro-funcionario.php?acao=editar&id=<?php echo $funcionario['id']?>">Editar</a></td>
+          <td class="text-center"><a class="btn btn-danger" href="cadastro-funcionario.php?acao=excluir&id=<?php echo $funcionario['id']?>">Excluir</a></td>
         </tr>
-      <?php } ?>
+        <?php } ?>
     </table>
   </main>
 
-  <?php include_once("footer.php"); ?>
+    <?php require_once "footer.php"; ?>
   <!-- Bootstrap core JavaScript -->
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>

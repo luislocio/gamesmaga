@@ -75,24 +75,28 @@ class Mobile_Detect
 
     /**
      * A cache for resolved matches
+     *
      * @var array
      */
     protected $cache = array();
 
     /**
      * The User-Agent HTTP header is stored in here.
+     *
      * @var string
      */
     protected $userAgent = null;
 
     /**
      * HTTP headers in the PHP-flavor. So HTTP_USER_AGENT and SERVER_SOFTWARE.
+     *
      * @var array
      */
     protected $httpHeaders = array();
 
     /**
      * CloudFront headers. E.g. CloudFront-Is-Desktop-Viewer, CloudFront-Is-Mobile-Viewer & CloudFront-Is-Tablet-Viewer.
+     *
      * @var array
      */
     protected $cloudfrontHeaders = array();
@@ -100,6 +104,7 @@ class Mobile_Detect
     /**
      * The matching Regex.
      * This is good for debug.
+     *
      * @var string
      */
     protected $matchingRegex = null;
@@ -790,9 +795,10 @@ class Mobile_Detect
      *
      * @param array $cfHeaders List of HTTP headers
      *
-     * @return  boolean If there were CloudFront headers to be set
+     * @return boolean If there were CloudFront headers to be set
      */
-    public function setCfHeaders($cfHeaders = null) {
+    public function setCfHeaders($cfHeaders = null)
+    {
         // use global _SERVER if $cfHeaders aren't defined
         if (!is_array($cfHeaders) || !count($cfHeaders)) {
             $cfHeaders = $_SERVER;
@@ -825,10 +831,11 @@ class Mobile_Detect
     }
 
     /**
-     * @param string $userAgent
+     * @param  string $userAgent
      * @return string
      */
-    private function prepareUserAgent($userAgent) {
+    private function prepareUserAgent($userAgent)
+    {
         $userAgent = trim($userAgent);
         $userAgent = substr($userAgent, 0, 500);
         return $userAgent;
@@ -1071,8 +1078,8 @@ class Mobile_Detect
      * Magic overloading method.
      *
      * @method boolean is[...]()
-     * @param  string                 $name
-     * @param  array                  $arguments
+     * @param  string $name
+     * @param  array  $arguments
      * @return mixed
      * @throws BadMethodCallException when the method doesn't exist and doesn't start with 'is'
      */
@@ -1093,7 +1100,7 @@ class Mobile_Detect
     /**
      * Find a detection rule that matches the current User-agent.
      *
-     * @param  null    $userAgent deprecated
+     * @param  null $userAgent deprecated
      * @return boolean
      */
     protected function matchDetectionRulesAgainstUA($userAgent = null)
@@ -1145,6 +1152,7 @@ class Mobile_Detect
     /**
      * Check if the device is mobile.
      * Returns true if any type of mobile device detected, including special ones
+     *
      * @param  null $userAgent   deprecated
      * @param  null $httpHeaders deprecated
      * @return bool
@@ -1210,11 +1218,12 @@ class Mobile_Detect
     /**
      * This method checks for a certain property in the
      * userAgent.
+     *
      * @todo: The httpHeaders part is not yet used.
      *
-     * @param  string        $key
-     * @param  string        $userAgent   deprecated
-     * @param  string        $httpHeaders deprecated
+     * @param  string $key
+     * @param  string $userAgent   deprecated
+     * @param  string $httpHeaders deprecated
      * @return bool|int|null
      */
     public function is($key, $userAgent = null, $httpHeaders = null)
@@ -1242,7 +1251,7 @@ class Mobile_Detect
      * This method will be used to check custom regexes against
      * the User-Agent string.
      *
-     * @param $regex
+     * @param  $regex
      * @param  string $userAgent
      * @return bool
      *
@@ -1353,116 +1362,88 @@ class Mobile_Detect
     {
         $isMobile = $this->isMobile();
 
-        if (
-            // Apple iOS 4-7.0 – Tested on the original iPad (4.3 / 5.0), iPad 2 (4.3 / 5.1 / 6.1), iPad 3 (5.1 / 6.0), iPad Mini (6.1), iPad Retina (7.0), iPhone 3GS (4.3), iPhone 4 (4.3 / 5.1), iPhone 4S (5.1 / 6.0), iPhone 5 (6.0), and iPhone 5S (7.0)
-            $this->is('iOS') && $this->version('iPad', self::VERSION_TYPE_FLOAT) >= 4.3 ||
-            $this->is('iOS') && $this->version('iPhone', self::VERSION_TYPE_FLOAT) >= 4.3 ||
-            $this->is('iOS') && $this->version('iPod', self::VERSION_TYPE_FLOAT) >= 4.3 ||
-
+        if (// Apple iOS 4-7.0 – Tested on the original iPad (4.3 / 5.0), iPad 2 (4.3 / 5.1 / 6.1), iPad 3 (5.1 / 6.0), iPad Mini (6.1), iPad Retina (7.0), iPhone 3GS (4.3), iPhone 4 (4.3 / 5.1), iPhone 4S (5.1 / 6.0), iPhone 5 (6.0), and iPhone 5S (7.0)
+            $this->is('iOS') && $this->version('iPad', self::VERSION_TYPE_FLOAT) >= 4.3 
+            || $this->is('iOS') && $this->version('iPhone', self::VERSION_TYPE_FLOAT) >= 4.3 
+            || $this->is('iOS') && $this->version('iPod', self::VERSION_TYPE_FLOAT) >= 4.3 
             // Android 2.1-2.3 - Tested on the HTC Incredible (2.2), original Droid (2.2), HTC Aria (2.1), Google Nexus S (2.3). Functional on 1.5 & 1.6 but performance may be sluggish, tested on Google G1 (1.5)
             // Android 3.1 (Honeycomb)  - Tested on the Samsung Galaxy Tab 10.1 and Motorola XOOM
             // Android 4.0 (ICS)  - Tested on a Galaxy Nexus. Note: transition performance can be poor on upgraded devices
             // Android 4.1 (Jelly Bean)  - Tested on a Galaxy Nexus and Galaxy 7
-            ( $this->version('Android', self::VERSION_TYPE_FLOAT)>2.1 && $this->is('Webkit') ) ||
-
+            || ( $this->version('Android', self::VERSION_TYPE_FLOAT)>2.1 && $this->is('Webkit') ) 
             // Windows Phone 7.5-8 - Tested on the HTC Surround (7.5), HTC Trophy (7.5), LG-E900 (7.5), Nokia 800 (7.8), HTC Mazaa (7.8), Nokia Lumia 520 (8), Nokia Lumia 920 (8), HTC 8x (8)
-            $this->version('Windows Phone OS', self::VERSION_TYPE_FLOAT) >= 7.5 ||
-
+            || $this->version('Windows Phone OS', self::VERSION_TYPE_FLOAT) >= 7.5 
             // Tested on the Torch 9800 (6) and Style 9670 (6), BlackBerry® Torch 9810 (7), BlackBerry Z10 (10)
-            $this->is('BlackBerry') && $this->version('BlackBerry', self::VERSION_TYPE_FLOAT) >= 6.0 ||
+            || $this->is('BlackBerry') && $this->version('BlackBerry', self::VERSION_TYPE_FLOAT) >= 6.0 
             // Blackberry Playbook (1.0-2.0) - Tested on PlayBook
-            $this->match('Playbook.*Tablet') ||
-
+            || $this->match('Playbook.*Tablet') 
             // Palm WebOS (1.4-3.0) - Tested on the Palm Pixi (1.4), Pre (1.4), Pre 2 (2.0), HP TouchPad (3.0)
-            ( $this->version('webOS', self::VERSION_TYPE_FLOAT) >= 1.4 && $this->match('Palm|Pre|Pixi') ) ||
+            || ( $this->version('webOS', self::VERSION_TYPE_FLOAT) >= 1.4 && $this->match('Palm|Pre|Pixi') ) 
             // Palm WebOS 3.0  - Tested on HP TouchPad
-            $this->match('hp.*TouchPad') ||
-
+            || $this->match('hp.*TouchPad') 
             // Firefox Mobile 18 - Tested on Android 2.3 and 4.1 devices
-            ( $this->is('Firefox') && $this->version('Firefox', self::VERSION_TYPE_FLOAT) >= 18 ) ||
-
+            || ( $this->is('Firefox') && $this->version('Firefox', self::VERSION_TYPE_FLOAT) >= 18 ) 
             // Chrome for Android - Tested on Android 4.0, 4.1 device
-            ( $this->is('Chrome') && $this->is('AndroidOS') && $this->version('Android', self::VERSION_TYPE_FLOAT) >= 4.0 ) ||
-
+            || ( $this->is('Chrome') && $this->is('AndroidOS') && $this->version('Android', self::VERSION_TYPE_FLOAT) >= 4.0 ) 
             // Skyfire 4.1 - Tested on Android 2.3 device
-            ( $this->is('Skyfire') && $this->version('Skyfire', self::VERSION_TYPE_FLOAT) >= 4.1 && $this->is('AndroidOS') && $this->version('Android', self::VERSION_TYPE_FLOAT) >= 2.3 ) ||
-
+            || ( $this->is('Skyfire') && $this->version('Skyfire', self::VERSION_TYPE_FLOAT) >= 4.1 && $this->is('AndroidOS') && $this->version('Android', self::VERSION_TYPE_FLOAT) >= 2.3 ) 
             // Opera Mobile 11.5-12: Tested on Android 2.3
-            ( $this->is('Opera') && $this->version('Opera Mobi', self::VERSION_TYPE_FLOAT) >= 11.5 && $this->is('AndroidOS') ) ||
-
+            || ( $this->is('Opera') && $this->version('Opera Mobi', self::VERSION_TYPE_FLOAT) >= 11.5 && $this->is('AndroidOS') ) 
             // Meego 1.2 - Tested on Nokia 950 and N9
-            $this->is('MeeGoOS') ||
-
+            || $this->is('MeeGoOS') 
             // Tizen (pre-release) - Tested on early hardware
-            $this->is('Tizen') ||
-
+            || $this->is('Tizen') 
             // Samsung Bada 2.0 - Tested on a Samsung Wave 3, Dolphin browser
             // @todo: more tests here!
-            $this->is('Dolfin') && $this->version('Bada', self::VERSION_TYPE_FLOAT) >= 2.0 ||
-
+            || $this->is('Dolfin') && $this->version('Bada', self::VERSION_TYPE_FLOAT) >= 2.0 
             // UC Browser - Tested on Android 2.3 device
-            ( ($this->is('UC Browser') || $this->is('Dolfin')) && $this->version('Android', self::VERSION_TYPE_FLOAT) >= 2.3 ) ||
-
+            || ( ($this->is('UC Browser') || $this->is('Dolfin')) && $this->version('Android', self::VERSION_TYPE_FLOAT) >= 2.3 ) 
             // Kindle 3 and Fire  - Tested on the built-in WebKit browser for each
-            ( $this->match('Kindle Fire') ||
-            $this->is('Kindle') && $this->version('Kindle', self::VERSION_TYPE_FLOAT) >= 3.0 ) ||
-
+            || ( $this->match('Kindle Fire') 
+            || $this->is('Kindle') && $this->version('Kindle', self::VERSION_TYPE_FLOAT) >= 3.0 ) 
             // Nook Color 1.4.1 - Tested on original Nook Color, not Nook Tablet
-            $this->is('AndroidOS') && $this->is('NookTablet') ||
-
+            || $this->is('AndroidOS') && $this->is('NookTablet') 
             // Chrome Desktop 16-24 - Tested on OS X 10.7 and Windows 7
-            $this->version('Chrome', self::VERSION_TYPE_FLOAT) >= 16 && !$isMobile ||
-
+            || $this->version('Chrome', self::VERSION_TYPE_FLOAT) >= 16 && !$isMobile 
             // Safari Desktop 5-6 - Tested on OS X 10.7 and Windows 7
-            $this->version('Safari', self::VERSION_TYPE_FLOAT) >= 5.0 && !$isMobile ||
-
+            || $this->version('Safari', self::VERSION_TYPE_FLOAT) >= 5.0 && !$isMobile 
             // Firefox Desktop 10-18 - Tested on OS X 10.7 and Windows 7
-            $this->version('Firefox', self::VERSION_TYPE_FLOAT) >= 10.0 && !$isMobile ||
-
+            || $this->version('Firefox', self::VERSION_TYPE_FLOAT) >= 10.0 && !$isMobile 
             // Internet Explorer 7-9 - Tested on Windows XP, Vista and 7
-            $this->version('IE', self::VERSION_TYPE_FLOAT) >= 7.0 && !$isMobile ||
-
+            || $this->version('IE', self::VERSION_TYPE_FLOAT) >= 7.0 && !$isMobile 
             // Opera Desktop 10-12 - Tested on OS X 10.7 and Windows 7
-            $this->version('Opera', self::VERSION_TYPE_FLOAT) >= 10 && !$isMobile
-        ){
+            || $this->version('Opera', self::VERSION_TYPE_FLOAT) >= 10 && !$isMobile
+        ) {
             return self::MOBILE_GRADE_A;
         }
 
-        if (
-            $this->is('iOS') && $this->version('iPad', self::VERSION_TYPE_FLOAT)<4.3 ||
-            $this->is('iOS') && $this->version('iPhone', self::VERSION_TYPE_FLOAT)<4.3 ||
-            $this->is('iOS') && $this->version('iPod', self::VERSION_TYPE_FLOAT)<4.3 ||
-
+        if ($this->is('iOS') && $this->version('iPad', self::VERSION_TYPE_FLOAT)<4.3 
+            || $this->is('iOS') && $this->version('iPhone', self::VERSION_TYPE_FLOAT)<4.3 
+            || $this->is('iOS') && $this->version('iPod', self::VERSION_TYPE_FLOAT)<4.3 
             // Blackberry 5.0: Tested on the Storm 2 9550, Bold 9770
-            $this->is('Blackberry') && $this->version('BlackBerry', self::VERSION_TYPE_FLOAT) >= 5 && $this->version('BlackBerry', self::VERSION_TYPE_FLOAT)<6 ||
-
+            || $this->is('Blackberry') && $this->version('BlackBerry', self::VERSION_TYPE_FLOAT) >= 5 && $this->version('BlackBerry', self::VERSION_TYPE_FLOAT)<6 
             //Opera Mini (5.0-6.5) - Tested on iOS 3.2/4.3 and Android 2.3
-            ($this->version('Opera Mini', self::VERSION_TYPE_FLOAT) >= 5.0 && $this->version('Opera Mini', self::VERSION_TYPE_FLOAT) <= 7.0 &&
-            ($this->version('Android', self::VERSION_TYPE_FLOAT) >= 2.3 || $this->is('iOS')) ) ||
-
+            || ($this->version('Opera Mini', self::VERSION_TYPE_FLOAT) >= 5.0 && $this->version('Opera Mini', self::VERSION_TYPE_FLOAT) <= 7.0 
+            && ($this->version('Android', self::VERSION_TYPE_FLOAT) >= 2.3 || $this->is('iOS')) ) 
             // Nokia Symbian^3 - Tested on Nokia N8 (Symbian^3), C7 (Symbian^3), also works on N97 (Symbian^1)
-            $this->match('NokiaN8|NokiaC7|N97.*Series60|Symbian/3') ||
-
+            || $this->match('NokiaN8|NokiaC7|N97.*Series60|Symbian/3') 
             // @todo: report this (tested on Nokia N71)
-            $this->version('Opera Mobi', self::VERSION_TYPE_FLOAT) >= 11 && $this->is('SymbianOS')
-        ){
+            || $this->version('Opera Mobi', self::VERSION_TYPE_FLOAT) >= 11 && $this->is('SymbianOS')
+        ) {
             return self::MOBILE_GRADE_B;
         }
 
-        if (
-            // Blackberry 4.x - Tested on the Curve 8330
-            $this->version('BlackBerry', self::VERSION_TYPE_FLOAT) <= 5.0 ||
+        if (// Blackberry 4.x - Tested on the Curve 8330
+            $this->version('BlackBerry', self::VERSION_TYPE_FLOAT) <= 5.0 
             // Windows Mobile - Tested on the HTC Leo (WinMo 5.2)
-            $this->match('MSIEMobile|Windows CE.*Mobile') || $this->version('Windows Mobile', self::VERSION_TYPE_FLOAT) <= 5.2 ||
-
+            || $this->match('MSIEMobile|Windows CE.*Mobile') || $this->version('Windows Mobile', self::VERSION_TYPE_FLOAT) <= 5.2 
             // Tested on original iPhone (3.1), iPhone 3 (3.2)
-            $this->is('iOS') && $this->version('iPad', self::VERSION_TYPE_FLOAT) <= 3.2 ||
-            $this->is('iOS') && $this->version('iPhone', self::VERSION_TYPE_FLOAT) <= 3.2 ||
-            $this->is('iOS') && $this->version('iPod', self::VERSION_TYPE_FLOAT) <= 3.2 ||
-
+            || $this->is('iOS') && $this->version('iPad', self::VERSION_TYPE_FLOAT) <= 3.2 
+            || $this->is('iOS') && $this->version('iPhone', self::VERSION_TYPE_FLOAT) <= 3.2 
+            || $this->is('iOS') && $this->version('iPod', self::VERSION_TYPE_FLOAT) <= 3.2 
             // Internet Explorer 7 and older - Tested on Windows XP
-            $this->version('IE', self::VERSION_TYPE_FLOAT) <= 7.0 && !$isMobile
-        ){
+            || $this->version('IE', self::VERSION_TYPE_FLOAT) <= 7.0 && !$isMobile
+        ) {
             return self::MOBILE_GRADE_C;
         }
 

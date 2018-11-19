@@ -8,26 +8,26 @@ $plataformas = listarPlataformas();
   <h3 class="mt-4">Generos</h3>
   <div class="list-group">
     <?php foreach ($generos as $genero) {
-      if (!empty($_GET)) {
-        $estadoGenero="";
-        if (!empty($_GET['idGenero']) && $genero['id']==$_GET['idGenero']) {
-          $estadoGenero="active";
-        }
-      } ?>
-      <a href="index.php?idGenero=<?=$genero['id']?>" class="list-group-item <?=$estadoGenero?>"><?=$genero['nm_genero']?></a>
+        if (!empty($_GET)) {
+            $estadoGenero="";
+            if (!empty($_GET['idGenero']) && $genero['id']==$_GET['idGenero']) {
+                $estadoGenero="active";
+            }
+        } ?>
+      <a href="index.php?idGenero=<?php echo $genero['id']?>" class="list-group-item <?php echo $estadoGenero?>"><?php echo $genero['nm_genero']?></a>
     <?php } ?>
   </div>
 
   <h3 class="mt-5">Plataformas</h3>
   <div class="list-group">
     <?php foreach ($plataformas as $plataforma) {
-      if (!empty($_GET)) {
-        $estadoPlataforma="";
-        if (!empty($_GET['idPlataforma']) && $plataforma['id']==$_GET['idPlataforma']) {
-          $estadoPlataforma="active";
-        }
-      } ?>
-      <a href="index.php?idPlataforma=<?=$plataforma['id']?>" class="list-group-item <?=$estadoPlataforma?>"><?=$plataforma['nm_plataforma']?></a>
+        if (!empty($_GET)) {
+            $estadoPlataforma="";
+            if (!empty($_GET['idPlataforma']) && $plataforma['id']==$_GET['idPlataforma']) {
+                $estadoPlataforma="active";
+            }
+        } ?>
+      <a href="index.php?idPlataforma=<?php echo $plataforma['id']?>" class="list-group-item <?php echo $estadoPlataforma?>"><?php echo $plataforma['nm_plataforma']?></a>
     <?php } ?>
   </div>
 </div>

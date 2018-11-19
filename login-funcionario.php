@@ -11,7 +11,7 @@ if (!empty($_SESSION['login']) && $_SESSION['login']['acesso']!="cliente") {
 <html lang="en">
 <head>
   <!-- Informações padrões do head -->
-  <?php include_once("head.php");?>
+    <?php require_once "head.php";?>
 
   <title>Gamesmaga - Login Funcionário</title>
   <link href="css/login.css" rel="stylesheet">
@@ -33,6 +33,6 @@ if (!empty($_SESSION['login']) && $_SESSION['login']['acesso']!="cliente") {
   <!-- Bootstrap core JavaScript -->
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <?php showAlert(); ?>
+    <?php showAlert(); ?>
 </body>
 </html>

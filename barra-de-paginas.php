@@ -11,29 +11,29 @@ $botaoAnterior = ($pagina > 1) ? "" : "disabled";
 $botaoProximo = ($pagina < $paginas) ? "" : "disabled";
 
 if (empty($_GET['busca']) && empty($_GET['idPlataforma']) && empty($_GET['idGenero'])) {
-  $get = "?";
+    $get = "?";
 } else {
-  if (!empty($_GET['busca'])) {
-    $get = "?busca=".$_GET['busca']."&";
-  } else{
+    if (!empty($_GET['busca'])) {
+        $get = "?busca=".$_GET['busca']."&";
+    } else{
 
-    if (!empty($_GET['idPlataforma'])) {
-      $get = "?idPlataforma".$_GET['idPlataforma']."&";
-    } elseif (!empty($_GET['idGenero'])) {
-      $get = "?idGenero=".$_GET['idGenero']."&";
+        if (!empty($_GET['idPlataforma'])) {
+            $get = "?idPlataforma".$_GET['idPlataforma']."&";
+        } elseif (!empty($_GET['idGenero'])) {
+            $get = "?idGenero=".$_GET['idGenero']."&";
+        }
     }
-  }
 }
 ?>
 
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">
-    <li class="page-item <?=$botaoAnterior?>"><a class="page-link" href="<?=$get?>page=<?=$pagina-1?>">Anterior</a></li>
+    <li class="page-item <?php echo $botaoAnterior?>"><a class="page-link" href="<?php echo $get?>page=<?php echo $pagina-1?>">Anterior</a></li>
     <?php for ($i = 1; $i <= $paginas ; $i++) {
-      $ativo = ($i==$pagina) ? "active" : ""; ?>
-      <li class="page-item <?=$ativo?>"><a class="page-link" href="<?=$get?>page=<?=$i?>"><?=$i?></a></li>
+        $ativo = ($i==$pagina) ? "active" : ""; ?>
+      <li class="page-item <?php echo $ativo?>"><a class="page-link" href="<?php echo $get?>page=<?php echo $i?>"><?php echo $i?></a></li>
     <?php } ?>
-    <li class="page-item <?=$botaoProximo?>"><a class="page-link" href="<?=$get?>page=<?=$pagina+1?>">Proximo</a></li>
+    <li class="page-item <?php echo $botaoProximo?>"><a class="page-link" href="<?php echo $get?>page=<?php echo $pagina+1?>">Proximo</a></li>
   </ul>
 </nav>
 <div class="row justify-content-around">

@@ -35,14 +35,14 @@ $funcionario=buscarFuncionario($_SESSION['login']['id']);
         <li class="nav-item active border-right">
           <a class="nav-link" href="cadastro-plataforma.php">Plataforma</a>
         </li>
-	<li class="nav-item active border-right">
+    <li class="nav-item active border-right">
           <a class="nav-link" href="cadastro-jogo.php">Jogo</a>
         </li>
-	<li class="nav-item active border-right">
+    <li class="nav-item active border-right">
           <a class="nav-link" href="pedidos.php">Pedidos</a>
         </li>
         <li class="nav-item active border-right">
-          <a class="nav-link">Olá, <?=$funcionario['login']?> </a>
+          <a class="nav-link">Olá, <?php echo $funcionario['login']?> </a>
         </li>
         <li class="nav-item active">
           <a class="nav-link" onclick="return confirm('Voce esta certo disso?')" href="cadastro-home.php?acao=logout"><i class="fas fa-sign-out-alt"></i></a>

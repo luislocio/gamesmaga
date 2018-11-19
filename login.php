@@ -3,8 +3,8 @@ require_once "funcoes.php";
 
 // Controle do nivel de acesso
 if (!empty($_SESSION['login'])) {
-  header("Location:index.php");
-  exit;
+    header("Location:index.php");
+    exit;
 }
 ?>
 
@@ -12,14 +12,14 @@ if (!empty($_SESSION['login'])) {
 <html lang="en">
 <head>  <meta charset="utf-8">
   <!-- Informações padrões do head -->
-  <?php include_once("head.php");?>
+    <?php require_once "head.php";?>
 
   <title>Gamesmaga - Login</title>
   <link href="css/login.css" rel="stylesheet">
 </head>
 
 <body class="text-center">
-  <?php include_once("header-cliente.php"); ?>
+    <?php require_once "header-cliente.php"; ?>
   <form class="form-signin" method="POST" action="valida-cliente.php">
     <img class="mb-4" src="img/icone.png" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">Faça seu login</h1>
@@ -40,6 +40,6 @@ if (!empty($_SESSION['login'])) {
   <!-- Bootstrap core JavaScript -->
   <script src="js/jquery-3.3.1.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <?php showAlert() ?>
+    <?php showAlert() ?>
 </body>
 </html>

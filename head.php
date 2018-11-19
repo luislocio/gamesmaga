@@ -8,4 +8,4 @@
 <link rel="icon" href="img/favicon.ico" type="image/x-icon">
 
 <!-- Informações padrões do head -->
-<?php include_once("head.php");?>
+<?php require_once "head.php";?>

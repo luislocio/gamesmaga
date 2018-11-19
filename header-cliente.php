@@ -1,34 +1,34 @@
 <?php
-include 'Mobile_Detect.php';
+require 'Mobile_Detect.php';
 $detect = new Mobile_Detect();
 
 // Declaração de variavéis da sessão
 if (empty($_SESSION['login'])) {
-  $_SESSION['login'] = [];
+    $_SESSION['login'] = [];
 }
 
 if (!empty($_SESSION['login']['id'])) {
-  if ($_SESSION['login']['acesso']=="cliente") {
-    $usuario=buscarCliente($_SESSION['login']['id']);
-  } else {
-    $usuario=buscarFuncionario($_SESSION['login']['id']);
-  }
+    if ($_SESSION['login']['acesso']=="cliente") {
+        $usuario=buscarCliente($_SESSION['login']['id']);
+    } else {
+        $usuario=buscarFuncionario($_SESSION['login']['id']);
+    }
 }
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
   <div class="container">
     <a class="navbar-brand font-weight-bold" href="index.php"><img src="./img/icone.png" width="40" class="d-inline-block img-thumbnail" style="background-color:#9CB66E" alt="GamEsmaga">
-      <?php
-      if ($detect->isMobile()){
-        if (!empty($_SESSION['login']['id'])) {
-          echo "<a class='nav-item active' style='color: white; text-decoration: none;' href='dashboard.php'>Olá, ".$usuario['login']."</a>";
-        } else {  echo "GamEsmaga </a>";
+        <?php
+        if ($detect->isMobile()) {
+            if (!empty($_SESSION['login']['id'])) {
+                echo "<a class='nav-item active' style='color: white; text-decoration: none;' href='dashboard.php'>Olá, ".$usuario['login']."</a>";
+            } else {  echo "GamEsmaga </a>";
+            }
+        }else{
+            echo"<span class='ml-2'>GamEsmaga</span> </a>";
         }
-      }else{
-        echo"<span class='ml-2'>GamEsmaga</span> </a>";
-      }
-      ?>
+        ?>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -38,20 +38,20 @@ if (!empty($_SESSION['login']['id'])) {
           <a class="nav-link" >(41) 3035-9095</a>
         </li>
         <?php if (!empty($_SESSION['login']['id'])) {
-          if ($_SESSION['login']['acesso']=="cliente") {
-            $usuario=buscarCliente($_SESSION['login']['id']);
-          } else {
-            $usuario=buscarFuncionario($_SESSION['login']['id']);
-          }
-          if (!$detect->isMobile()){
-            echo "<li class='nav-item active border-right px-2'>
+            if ($_SESSION['login']['acesso']=="cliente") {
+                $usuario=buscarCliente($_SESSION['login']['id']);
+            } else {
+                $usuario=buscarFuncionario($_SESSION['login']['id']);
+            }
+            if (!$detect->isMobile()) {
+                echo "<li class='nav-item active border-right px-2'>
               <a class='nav-link' href='dashboard.php'>Olá, ".$usuario['login']."</a>
             </li>";
-          }
-          ?>
+            }
+            ?>
           <!--
           <li class="nav-item border-right px-3">
-            <a class="nav-link" href="dashboard.php">Olá, <?=$usuario['login']?> </a>
+            <a class="nav-link" href="dashboard.php">Olá, <?php echo $usuario['login']?> </a>
           </li> -->
           <li class="nav-item active border-right px-2">
             <a class="nav-link" onclick="return confirm('Voce esta certo disso?')" href="index.php?acao=logout"><i class="fas fa-sign-out-alt"></i></a>
