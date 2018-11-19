@@ -73,11 +73,12 @@ if (!empty($_GET)) {
     $resultado = calculaFrete(
       '41106',          // CÓDIGO DA OPERAÇÃO
       '80820320',       // CEP ORIGEM
-      $cep,             // CEP DESTINO
+      $_GET['cep'],             // CEP DESTINO
       $peso,            // PESO DO PACOTE
       '8', '15', '20',  // DIMENSÕES DO PACOTE
       0);               // VALOR DECLARADO?
-      $valor = floatval(str_replace(',', '.', str_replace('.', '', $resultado['valor'])));
+      console_log($resultado);
+      $valor = floatval(str_replace(',', '.', str_replace('.', '',$resultado['valor'])));
       $freteTotal= floatval($valor * $quantidadeDeEmbalagens);
       $_SESSION['frete']['valor']=$freteTotal;
       break;
