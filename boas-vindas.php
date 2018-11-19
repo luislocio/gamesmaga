@@ -20,16 +20,18 @@ $funcionario=buscarFuncionario($_SESSION['login']['id']);
 
   <title>GamEsmaga - Sistema de Cadastro</title>
   <link href="css/cover.css" rel="stylesheet">
+  <meta http-equiv="refresh" content="2;url=cadastro-home.php">
 </head>
 
 <body class="text-center">
   <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-    <header class="masthead mb-auto">
+    <header class="masthead ">
       <div class="inner">
         <h3>GamEsmaga - Sistema de Cadastros</h3>
       </div>
     </header>
-    <main role="main" class="inner cover">
+    <main role="main" class="inner cover my-auto">
+      <img src="img/pacman.svg" alt="">
       <h1 class="cover-heading">Seja bem vindo, <?=$funcionario['login']?>.</h1>
     </main>
 </div>
