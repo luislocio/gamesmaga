@@ -192,11 +192,12 @@ if (!empty($_GET)) {
                 <?php
                 $botao="secondary disabled";
                 if ($_SESSION['frete']['valor'] > 0) {
-                  $botao="primary";
+                  $botao="success";
                 }
                 ?>
                 <div class="row justify-content-end m-2">
-                  <a class="btn btn-<?=$botao?>" href="checkout.php">Finalizar Compra</a>
+		  <a class="btn btn-primary mt-2" href="index.php">Continuar Comprando</a>
+                  <a class="btn btn-<?=$botao?> ml-2 mt-2" href="checkout.php">Finalizar Compra</a>
                 </div>
               </div>
             </div>
