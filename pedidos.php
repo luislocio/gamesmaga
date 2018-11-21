@@ -3,52 +3,60 @@ require_once "funcoes.php";
 
 // Pré-requisito [login]
 if (empty($_SESSION['login'])) {
-    necessarioLogin();
-    header("Location:login.php");
-    exit;
+  necessarioLogin();
+  header("Location:login.php");
+  exit;
 }
 
 // Cria a lista de pedidos a serem mostrados na tela
 if (empty($pedidos)) {
-    $titulo="<h3 class='text-center my-3'>Todos os pedidos</h3>";
-    $ativo="todas";
-    $pedidos=listarPedidos();
+  $titulo="<h3 class='text-center my-3'>Todos os pedidos</h3>";
+  $ativo="todas";
+  $pedidos=listarPedidos();
 }
 
 
 // Filtra os pedidos
 if (!empty($_GET)) {
+  if(!empty($_GET['acao'])){
+    if ($_GET['acao'] == "finalizar") {
+      finalizarPedido($_GET['id']);
+      header("Location:pedidos.php");
+      exit;
+    }
+  } else {
     $pedidos=listarPedidos();
     switch ($_GET['status']) {
-    // Apenas pedidos pendentes
-    case 'pendente':
-        $titulo="<h3 class='text-center my-3'>Pedidos Pendentes</h3>";
-        $ativo="pendentes";
-        foreach ($pedidos as $indice => $pedido) {
-            if (!empty($pedido['dt_pagamento'])) {
-                unset($pedidos[$indice]);
-            }
+      // Apenas pedidos pendentes
+      case 'pendente':
+      $titulo="<h3 class='text-center my-3'>Pedidos Pendentes</h3>";
+      $ativo="pendentes";
+      foreach ($pedidos as $indice => $pedido) {
+        if (!empty($pedido['dt_pagamento'])) {
+          unset($pedidos[$indice]);
         }
-        break;
-    // Apenas pedidos finalizados
-    case 'finalizados':
-        $titulo="<h3 class='text-center my-3'>Pedidos Finalizados</h3>";
-        $ativo="finalizados";
-        foreach ($pedidos as $indice => $pedido) {
-            if (empty($pedido['dt_pagamento'])) {
-                unset($pedidos[$indice]);
-            }
+      }
+      break;
+      // Apenas pedidos finalizados
+      case 'finalizados':
+      $titulo="<h3 class='text-center my-3'>Pedidos Finalizados</h3>";
+      $ativo="finalizados";
+      foreach ($pedidos as $indice => $pedido) {
+        if (empty($pedido['dt_pagamento'])) {
+          unset($pedidos[$indice]);
         }
-        break;
-    // Todos os pedidos
-    case 'todas':
-        $titulo="<h3 class='text-center my-3'>Todos os pedidos</h3>";
-        $ativo="todas";
-        break;
-    default:
-        //
-        break;
+      }
+      break;
+      // Todos os pedidos
+      case 'todas':
+      $titulo="<h3 class='text-center my-3'>Todos os pedidos</h3>";
+      $ativo="todas";
+      break;
+      default:
+      //
+      break;
     }
+  }
 }
 ?>
 
@@ -57,14 +65,14 @@ if (!empty($_GET)) {
 
 <head>
   <!-- Informações padrões do head -->
-    <?php require_once "head.php";?>
+  <?php require_once "head.php";?>
 
   <title>Cadastro - Relatório de pedidos</title>
   <link rel="stylesheet" href="css/shop-homepage.css">
 </head>
 
 <body>
-    <?php require_once "header-funcionario.php"; ?>
+  <?php require_once "header-funcionario.php"; ?>
 
   <!-- Begin page content -->
   <main role="main" class="container">
@@ -79,7 +87,7 @@ if (!empty($_GET)) {
             <a class="nav-link" href="pedidos.php?status=pendente">Pendentes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="pedidos.php?status=finalizados">finalizados</a>
+            <a class="nav-link" href="pedidos.php?status=finalizados">Finalizados</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="pedidos.php?status=todas">Todas</a>
@@ -88,43 +96,52 @@ if (!empty($_GET)) {
       </div>
       <div class="card-body">
         <div id="accordion" class="list-group">
-            <?php if(!empty($pedidos)) {
-                foreach ($pedidos as $pedido) {
-                    $itensDoPedido=listarItens($pedido['id']);
+          <?php if(!empty($pedidos)) {
+            foreach ($pedidos as $pedido) {
+              $itensDoPedido=listarItens($pedido['id']);
 
-                    $totalDoPedido = 0.0;
-                    foreach ($itensDoPedido as $item) {
-                        $preco = floatval(str_replace(',', '.', str_replace('.', '', $item['vl_produto'])));
-                        $totalDoPedido = $preco + $totalDoPedido;
-                    }
+              $totalDoPedido = 0.0;
+              foreach ($itensDoPedido as $item) {
+                $preco = floatval(str_replace(',', '.', str_replace('.', '', $item['vl_produto'])));
+                $totalDoPedido = $preco + $totalDoPedido;
+              }
 
-                    if ($_GET['status']=="todas") {
-                        if (!empty($pedido['dt_pagamento'])) {
-                            $status = "Finalizado";
-                        } else {
-                            $status = "Pendente";
-                        }
-                    }else {
-                        $status ="";
-                    }
+              if (!empty($_GET['status']) && $_GET['status']=="todas") {
+                if (!empty($pedido['dt_pagamento'])) {
+                  $status = "Finalizado";
+                } else {
+                  $status = "Pendente";
+                }
+              }else {
+                $status ="";
+              }
 
-                    if ($pedido == end($pedidos)) {
-                        $borda = "rounded-bottom";
-                    } else {
-                        $borda = "";
-                    }
-                    ?>
+              if (!empty($pedido['dt_pagamento'])) {
+                $botaoFinalizar = "class='btn btn-secondary disabled'";
+              } else {
+                $botaoFinalizar = "class='btn btn-success'";
+              }
+
+              if ($pedido == end($pedidos)) {
+                $borda = "rounded-bottom";
+              } else {
+                $borda = "";
+              }
+              ?>
               <div class="list-group-item <?php echo $borda?>" data-toggle="collapse" data-target="#collapse<?php echo $pedido['id']?>" aria-expanded="false" aria-controls="collapse<?php echo $pedido['id']?>" id="heading<?php echo $pedido['id']?>">
-                <div class="row justify-content-between px-3">
-                  <span>Pedido # <?php echo $pedido['id']?></span>
-                  <span>Cliente # <?php echo $pedido['id_cliente']?></span>
-                  <span><?php echo $pedido['dt_compra']?></span>
-                    <?php if (!empty($status)) { ?>
-                    <span><?php echo $status?></span>
-                    <?php } ?>
-                  <span><?php echo money_format('%n', ($totalDoPedido + $pedido['vl_frete']))?></span>
-                </div>
-              </button>
+                <table class="table table-borderless table-sm text m-0 ">
+                  <td class="align-middle">Pedido # <?php echo $pedido['id']?></td>
+                  <td class="align-middle">Cliente # <?php echo $pedido['id_cliente']?></td>
+                  <td class="align-middle"><?php echo $pedido['dt_compra']?></td>
+                  <?php if (!empty($status)) { ?>
+                    <td class="align-middle"><?php echo $status?></td>
+                  <?php } ?>
+                  <td class="align-middle"><?php echo money_format('%n', ($totalDoPedido + $pedido['vl_frete']))?></td>
+                  <?php if ($_SESSION['login']['acesso'] == "admin") { ?>
+                    <td class="text-center align-middle"><a <?=$botaoFinalizar?> href="pedidos.php?acao=finalizar&id=<?php echo $pedido['id']?>">Finalizar Pedido</a></td>
+                  <?php } ?>
+                </tr>
+              </table>
             </div>
             <div id="collapse<?php echo $pedido['id']?>" class="collapse list-group-item" aria-labelledby="heading<?php echo $pedido['id']?>" data-parent="#accordion">
               <div class="">
@@ -136,14 +153,17 @@ if (!empty($_GET)) {
                       <th>Quantidade</th>
                       <th>Valor unitário</th>
                       <th>Valor total</th>
+                      <?php if ($_SESSION['login']['acesso'] == "admin") { ?>
+                        <th>&nbsp;</th>
+                      <?php } ?>
                     </thead>
                   </tr>
-                    <?php
-                      $itensDoPedido = array_unique($itensDoPedido, SORT_REGULAR);
-                    foreach ($itensDoPedido as $item) {
-                        $preco = floatval(str_replace(',', '.', str_replace('.', '', $item['vl_produto'])));
-                        $quantidade = quantidadeDeItens($pedido['id'], $item['id_jogo']);
-                        ?>
+                  <?php
+                  $itensDoPedido = array_unique($itensDoPedido, SORT_REGULAR);
+                  foreach ($itensDoPedido as $item) {
+                    $preco = floatval(str_replace(',', '.', str_replace('.', '', $item['vl_produto'])));
+                    $quantidade = quantidadeDeItens($pedido['id'], $item['id_jogo']);
+                    ?>
 
                     <tr class="border-bottom">
                       <td class="align-middle"><?php echo $item['nome']?><br> </td>
@@ -152,7 +172,7 @@ if (!empty($_GET)) {
                       <td class="align-middle"><?php echo money_format('%n', floatval($preco))?></td>
                       <td class="align-middle" width="110px" align="center"><?php echo money_format('%n', ($quantidade*$preco))?></td>
                     </tr>
-                    <?php } ?>
+                  <?php } ?>
                   <tr>
                     <td></td>
                     <td></td>
@@ -177,12 +197,12 @@ if (!empty($_GET)) {
                 </table>
               </div>
             </div>
-                <?php }
-} else { ?>
+          <?php }
+        } else { ?>
 
           <h3 class='text-center my-3'>Não há pedidos a serem mostrados.</h3>
 
-            <?php } ?>
+        <?php } ?>
       </div>
     </div>
   </div>
