@@ -13,6 +13,11 @@ if (empty($_SESSION['login'])) {
         header("Location:carrinho.php");
         exit;
     }
+    if ($_SESSION['login']['acesso'] != "cliente") {
+        compraFuncionario();
+        header("Location:carrinho.php");
+        exit;
+    }
 }
 // Atribuição de valor às variaveis principais
 $carrinho = $_SESSION['carrinho'];

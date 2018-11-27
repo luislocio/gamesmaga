@@ -86,6 +86,11 @@ function falhaCrud()
   $_SESSION["mensagem"] = "Não foi possivel prosseguir. Entre em contato com o administrador";
 }
 
+function compraFuncionario()
+{
+  $_SESSION["mensagem"] = "Usuarios de funcionarios nao podem realizar compras.";
+}
+
 // ---------- CLIENTES ----------
 function buscarCliente($id)
 {
